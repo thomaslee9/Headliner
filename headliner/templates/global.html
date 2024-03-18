@@ -20,8 +20,9 @@
             {{form.as_table}}
         </table>
         {% csrf_token %}
+        <button id="id_post_button">Submit</button>
     </form>
-    <div id="posts-container">
+    <div id="events-container">
     </div>
     <script>
         window.onload = function() {
