@@ -8,4 +8,5 @@ urlpatterns = [
     path('headliner/get-global', views.get_global, name="get_global"),
     path('create-event/', views.create_event_action, name="create_event"),
     path('global/', views.global_action, name="global"),
+    path('event/<int:event_id>/', views.event_action, name="event"),
 ]
