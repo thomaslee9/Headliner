@@ -1,0 +1,23 @@
+17-437 Team30
+
+Product Backlog
+
+    User Management
+    -   User registration and login with OAuth (Google or Facebook)
+    -   User roles/permissions for event-goers, event organizers, and administrators
+    -   Profile creation page and settings personalization
+    Main Page & Event Discovery
+    -   Initial global stream page displaying music events near a user. 
+    -   Search bar and filtering based on location, date, genre, etc.
+    -   Reach Goal: Google Maps API integration to display events by location
+    Event Creation & Management
+    -   “Create” page for users to post event info, tickets, location, images, etc.
+    -   “Private” event mode to specify which users can access the shared event page
+    -   Tracked RSVPs from event-goers with “going”, “maybe”, and “not going” options
+    -   Enhanced permissions for event creators to moderate activity on their shared event page
+    Shared Event Page
+    -   Global chat stream exclusive to RSVPed event-goers for users to communicate about the event in real-time.
+    -   Compatibility with uploading of photos, videos, and links
+    -   Creation of public and private sub-groups as separate pages within the event space.
+    -   Option to request to join different sub-groups and for sub-group creators to accept or reject join requests
+
