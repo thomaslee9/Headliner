@@ -18,7 +18,8 @@ headliner.css */
 }
 
 #site_name {
-=======
+    text-align: center;
+}
 .title {
     background-color: darkblue;
     width: 100vw;
@@ -74,6 +75,10 @@ headliner.css */
 
 .image-container {
     margin-bottom: 10px;
+}
+.event-picture {
+    width: 300px;
+    height: 300px;
 }
 
 .post-container {
