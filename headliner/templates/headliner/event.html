@@ -33,9 +33,12 @@ event.html -->
     <div class="box" id="error">{{ error }}</div>
 
     <div class="event-box" id="event-page">
+        {{event.title}} at {{event.location}} on {{event.date}}
         Description:
         <br>
         {{event.event_description}}
+        <br>
+        Price: {{event.price}}
         <br>
         <img src="{% url 'photo' event.id %}" alt="Event Picture" class="event-picture">
     </div>
