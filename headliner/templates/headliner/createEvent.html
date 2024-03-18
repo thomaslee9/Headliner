@@ -1,6 +1,6 @@
 <!-- 17-437 Team30
 Headliner App 
-login.html -->
+createEvent.html -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ login.html -->
 
         <a id="create_event_link" class="box" href="{% url 'create_event' %}"> Create </a>
 
-        <div id="page_name" class="box"> Global Event Stream </div>
+        <div id="page_name" class="box"> Create Event </div>
 
     </header>
 
@@ -37,25 +37,12 @@ login.html -->
         {{ error }}
     </div>
 
-    <form action="{% url 'global' %}" id="event_form" method = "POST">
+    <form action="{% url 'create_event' %}" id="event_form" method = "POST">
         <table>
             {{form.as_table}}
         </table>
         {% csrf_token %}
         <button id="id_post_button">Submit</button>
     </form>
-    <div id="events-container">
-    </div>
-    <script>
-        window.onload = function() {
-            function updatePostsAndComments() {
-                getList();
-                setTimeout(updatePostsAndComments, 1000);
-            }
-            updatePostsAndComments();
-        };
-    </script>
 
 </body>
-
-</html>

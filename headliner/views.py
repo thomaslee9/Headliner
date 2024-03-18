@@ -170,6 +170,13 @@ def global_action(request):
     context = { 'user': user, 'form': event_form, 'entries': posts}
     return render(request, 'headliner/global.html', context)
 
+@login_required
+def create_event_action(request):
+    context = {}
+    if request.method == 'GET':
+        context['form'] = EventForm()
+        return render(request, 'headliner/createEvent.html', context)
+
 def get_global(request):
     if not request.user.is_authenticated:
         return _my_json_error_response("You must be logged in to do this operation", status=401)
