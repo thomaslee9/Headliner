@@ -1,6 +1,6 @@
 <!-- 17-437 Team30
 Headliner App 
-createEvent.html -->
+event.html -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -24,25 +24,21 @@ createEvent.html -->
 
         <a id="create_event_link" class="box" href="{% url 'create_event' %}"> Create </a>
 
-        <div id="page_name" class="box"> Create Event </div>
+        <div id="page_name" class="box"> {{event.created_by}}'s Event Page </div>
 
     </header>
 
 
-    <div class="box" id="status">
-        {{ status }}
+    <div class="box" id="status">{{ status }}</div>
+    <div class="box" id="error">{{ error }}</div>
+
+    <div class="box" id="event-page">
+        Event Description:
+        <br>
+        {{event.event_description}}
     </div>
 
-    <div class="box" id="error">
-        {{ error }}
-    </div>
-
-    <form action="{% url 'create_event' %}" id="event-form" method = "POST">
-        <table>
-            {{form.as_table}}
-        </table>
-        {% csrf_token %}
-        <button id="id_post_button">Submit</button>
-    </form>
 
 </body>
+
+</html>

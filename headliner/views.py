@@ -3,7 +3,7 @@
 # views.py
 
 from django.shortcuts import render
-from django.shortcuts import redirect 
+from django.shortcuts import redirect , get_object_or_404
 from django.urls import reverse
 
 from headliner.forms import LoginForm
@@ -143,6 +143,14 @@ def logout_action(request):
     context['form'] = LoginForm()
 
     return redirect(reverse('login'))
+
+
+@login_required
+def event_action(request, event_id):
+    context = {}
+    event = get_object_or_404(Event, id=event_id)
+    context['event'] = event
+    return render(request, 'headliner/event.html', context)
 
 
 
