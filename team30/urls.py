@@ -1,3 +1,7 @@
+# 17-437 Team30
+# Headliner App
+# urls.py
+
 """
 URL configuration for team30 project.
 
@@ -19,8 +23,15 @@ from django.conf.urls.static import static
 from django.urls import path, include 
 from django.conf import settings
 
+from headliner import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('', views.login_action, name='home'),
+    path('log-in', views.login_action, name='login'),
+    path('register', views.register_action, name='register'),
+
     path('', include('headliner.urls')),
 ]
 
