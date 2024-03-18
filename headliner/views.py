@@ -5,6 +5,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect , get_object_or_404
 from django.urls import reverse
+from django.http import HttpResponse, Http404
 
 from headliner.forms import LoginForm
 from headliner.forms import RegisterForm
@@ -135,7 +136,7 @@ def register_action(request):
 
     return redirect(reverse('global'))
 
-
+@login_required
 def logout_action(request):
     logout(request)
 
@@ -143,6 +144,15 @@ def logout_action(request):
     context['form'] = LoginForm()
 
     return redirect(reverse('login'))
+
+@login_required
+def get_photo(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+
+    if not event.event_picture:
+        raise Http404
+    
+    return HttpResponse(event.event_picture)
 
 
 @login_required

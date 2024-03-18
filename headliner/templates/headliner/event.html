@@ -32,10 +32,12 @@ event.html -->
     <div class="box" id="status">{{ status }}</div>
     <div class="box" id="error">{{ error }}</div>
 
-    <div class="box" id="event-page">
-        Event Description:
+    <div class="event-box" id="event-page">
+        Description:
         <br>
         {{event.event_description}}
+        <br>
+        <img src="{% url 'photo' event.id %}" alt="Event Picture" class="event-picture">
     </div>
 
 
