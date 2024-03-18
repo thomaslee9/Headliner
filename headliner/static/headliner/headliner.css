@@ -96,13 +96,13 @@ headliner.css */
     width: 270px;
     border-width: 2px;
     border-style: solid;
-    border-color: cornflowerblue;
+    border-color: cadetblue;
     margin: 5px;
     margin-left: 4vw;
     font-family: Helvetica;
     font-size: 20px;
     font-style: bold;
-    color: cornflowerblue;
+    color: cadetblue;
 }
 
 .vote-div {
