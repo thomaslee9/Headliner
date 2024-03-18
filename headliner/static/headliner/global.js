@@ -99,7 +99,7 @@ function makeEventElement(item) {
     voteDiv.className = 'vote-div';
     voteDiv.id = 'id_vote_div_' + item.id;
     voteDiv.innerHTML = `
-        <div> Vote: 👍 👎</div>
+        <div> Like: 👍  Dislike: 👎</div>
     `;
     element.appendChild(voteDiv)
 
