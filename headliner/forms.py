@@ -66,5 +66,5 @@ class RegisterForm(forms.Form):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['event_description']
+        fields = ['event_description', 'event_picture']
 

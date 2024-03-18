@@ -48,7 +48,7 @@ function updateList(items) {
         let eventId = event.id.replace('id_event_div_', '');
         existingEventIds.add(parseInt(eventId));
     });
-
+    console.log(items['events'])
     for(let event of items['events']) {
         if (!existingEventIds.has(event.id)){
             list.prepend(makeEventElement(event))
@@ -66,10 +66,21 @@ function makeEventElement(item) {
     let date = new Date(item.creation_time);
     let localDateString = date.toLocaleDateString();
     let localTimeString = date.toLocaleTimeString('en-US', format);
+    let pictureElement = '';
+    if (item.picture) {
+        pictureElement = `<img src="${item.picture}" alt="Event Picture" class="event-picture">`;
+    }
     element.innerHTML = `
-        <a href="${`/other_profile/${item.username}/`}" class="event-name" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}:</a>
-        <span id="id_event_text_${ item.id }" class="event-text"> ${item.text}</span>
-        <span id="id_event_date_time_${item.id}" class="event-date"> Posted on: ${ localDateString } ${localTimeString}</span>
+
+        <div class="image-container">
+            ${pictureElement}
+        </div>
+        <div class="post-container">
+            <a href="${`/other_profile/${item.username}/`}" class="event-name" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
+            <span id="id_event_text_${ item.id }" class="event-text">${item.text}</span>
+            <span id="id_event_date_time_${item.id}" class="event-date">Posted on: ${ localDateString } ${localTimeString}</span>
+            <div id=comments-for-event-${ item.id }></div>
+        </div>
     `;
 
     // Build Tag Element for this Event post

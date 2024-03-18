@@ -4,8 +4,21 @@ headliner.css */
 
 .header {
     background-color: aquamarine;
-    width: 100vh;
-    height: 8vh;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#site_name {
+    text-align: center;
 }
 
 .title {
@@ -30,12 +43,63 @@ headliner.css */
     border-color: darkblue;
     margin: 8px;
     font-family: Helvetica;
+
     font-size: 30px;
-    font-style: bold;
+    font-weight: bold;
     color: darkblue;
+    text-decoration: none;
 }
 
-#register_form {
+#register_link {
+    font-size: 20px;
+    color: darkblue;
+    text-decoration: none;
+}
+.content {
+    max-width: 800px;
+
+    background-color: darkblue;
+    width: 330px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: lightblue;
+    /* margin: 8px; */
+    font-family: Helvetica;
+
+    font-size: 18px;
+    font-style: bold;
+    color: lightblue;
+
+    text-align: left;
+}
+
+.center-form {
+    text-align: center;
+}
+
+.center-posts {
+    text-align: center;
+}
+.event-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.image-container {
+    margin-bottom: 10px;
+}
+.event-picture {
+    width: 300px;
+    height: 300px;
+}
+
+.post-container {
+    text-align: left;
+}
+
+#login-form {
     background-color: darkblue;
     width: 270px;
     border-width: 2px;
@@ -49,7 +113,7 @@ headliner.css */
     color: lightblue;
 }
 
-#login_form {
+#register-form {
     background-color: darkblue;
     width: 270px;
     border-width: 2px;
@@ -63,7 +127,7 @@ headliner.css */
     color: lightblue;
 }
 
-#event_form {
+#event-form {
     background-color: darkblue;
     width: 270px;
     border-width: 2px;
@@ -75,6 +139,8 @@ headliner.css */
     font-size: 20px;
     font-style: bold;
     color: lightblue;
+
+    text-align: center;
 }
 
 
@@ -106,12 +172,12 @@ headliner.css */
 
 .comment-div {
     background-color: lightblue;
-    width: 270px;
+    width: 240px;
     border-width: 2px;
     border-style: solid;
     border-color: cadetblue;
     margin: 5px;
-    margin-left: 4vw;
+    margin-left: 6vw;
     font-family: Helvetica;
     font-size: 20px;
     font-style: bold;
@@ -125,7 +191,7 @@ headliner.css */
     border-style: solid;
     border-color: lightblue;
     margin: 2px;
-    margin-left: 2vw;
+    /* margin-left: 2vw; */
     font-family: Helvetica;
     font-size: 20px;
     font-style: bold;
