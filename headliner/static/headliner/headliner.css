@@ -85,7 +85,7 @@ headliner.css */
     text-align: center;
 }
 
-#event_form {
+#event-form {
     background-color: darkblue;
     width: 270px;
     border-width: 2px;
@@ -97,6 +97,8 @@ headliner.css */
     font-size: 20px;
     font-style: bold;
     color: lightblue;
+
+    text-align: center;
 }
 
 
