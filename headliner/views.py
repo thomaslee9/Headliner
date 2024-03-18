@@ -32,27 +32,31 @@ def register_action(request):
     return render(request, 'headliner/register.html', {})
 
 
+
 @login_required
 def global_action(request):
     user = request.user
     if request.method == 'GET':
         p = EventForm()
-        posts = Event.objects.all().order_by('-creation_time')
-        context = {'user': user, 'form': p, 'entries': posts}
+        events = Event.objects.all().order_by('-creation_time')
+        context = {'user': user, 'form': p, 'entries': events}
         return render(request, 'headliner/global.html', context)
 
     entry = Event()
     entry.created_by=request.user
     entry.creation_time=timezone.now()
 
-    post_form = EventForm(request.POST)
-    if not post_form.is_valid():
-        context = { 'form': post_form, 'user':user }
+    event_form = EventForm(request.POST)
+    if not event_form.is_valid():
+        context = { 'form': event_form, 'user':user }
         return render(request, 'headliner/global.html', context)
-    
-    entry.post_input_text = post_form.cleaned_data['post_input_text']
+    entry.post_input_text = event_form.cleaned_data['post_input_text']
     entry.save()
     posts = Event.objects.all().order_by('-creation_time')
+
+    context = { 'user': user, 'form': event_form, 'entries': posts}
+    return render(request, 'headliner/global.html', context)
+
     context = { 'user': user, 'form': post_form, 'entries': posts}
     return render(request, 'headliner/global.html', context)
 
