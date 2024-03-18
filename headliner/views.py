@@ -193,10 +193,37 @@ def global_action(request):
 
 @login_required
 def create_event_action(request):
+    user = request.user
     context = {}
     if request.method == 'GET':
         context['form'] = EventForm()
         return render(request, 'headliner/createEvent.html', context)
+    
+
+    entry = Event()
+    entry.created_by=request.user
+    entry.creation_time=timezone.now()
+
+    event_form = EventForm(request.POST)
+    if 'event_picture' in request.FILES:
+        entry.event_picture = request.FILES['event_picture']
+
+    if not event_form.is_valid():
+        context = { 'form': event_form, 'user':user }
+        return render(request, 'headliner/global.html', context)
+    
+    entry.event_description = event_form.cleaned_data['event_description']
+    entry.title = event_form.cleaned_data['title']
+    entry.location = event_form.cleaned_data['location']
+    entry.date = event_form.cleaned_data['date']
+    entry.price = event_form.cleaned_data['price']
+
+    entry.save()
+
+    context = { 'user': user, 'form': EventForm(), 'status': entry.title + " event has been posted!!" }
+    return render(request, 'headliner/createEvent.html', context)
+    
+
 
 def get_global(request):
     if not request.user.is_authenticated:

@@ -34,13 +34,6 @@ login.html -->
 
     <div class="content">
 
-        <form action="{% url 'global' %}" method="POST" class="event-form" enctype="multipart/form-data">
-            <table>
-                {{ form.as_table }}
-            </table>
-            {% csrf_token %}
-            <button id="id_post_button">Submit</button>
-        </form>
     </div>
     <div id="events-container" class="center-posts"></div>
     <script>

@@ -68,3 +68,16 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = ['event_description', 'event_picture']
 
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['event_picture', 'event_description', 'title', 'location', 'price', 'date']
+        labels = {
+            'event_picture': 'Add a Photo',
+            'title': 'Title',
+            'event_description': 'Description',
+            'location': 'Location',
+            'price': 'Price',
+            'date': 'Date'
+        }
+        
