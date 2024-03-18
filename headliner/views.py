@@ -3,7 +3,8 @@
 # views.py
 
 from django.shortcuts import render
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect 
+from django.urls import reverse
 
 from headliner.forms import LoginForm
 from headliner.forms import RegisterForm
@@ -133,6 +134,15 @@ def register_action(request):
     context['status'] = status
 
     return redirect(reverse('global'))
+
+
+def logout_action(request):
+    logout(request)
+
+    context = {'status': "Successfully Logged Out"}
+    context['form'] = LoginForm()
+
+    return redirect(reverse('login'))
 
 
 
