@@ -35,7 +35,7 @@ login.html -->
         {{ error }}
     </div>
 
-    <form action="{% url 'global' %}" method = "POST">
+    <form action="{% url 'global' %}" id="event_form"method = "POST">
         <table>
             {{form.as_table}}
         </table>

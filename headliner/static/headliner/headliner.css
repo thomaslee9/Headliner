@@ -62,3 +62,31 @@ headliner.css */
     font-style: bold;
     color: lightblue;
 }
+
+#event_form {
+    background-color: darkblue;
+    width: 270px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: lightblue;
+    margin: 8px;
+    font-family: Helvetica;
+
+    font-size: 20px;
+    font-style: bold;
+    color: lightblue;
+}
+
+
+.event-div {
+    background-color: cornflowerblue;
+    width: 310px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: darkblue;
+    margin: 5px;
+    font-family: Helvetica;
+    font-size: 20px;
+    font-style: bold;
+    color: darkblue;
+}
