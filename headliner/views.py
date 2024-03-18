@@ -153,7 +153,7 @@ def global_action(request):
     if not event_form.is_valid():
         context = { 'form': event_form, 'user':user }
         return render(request, 'headliner/global.html', context)
-    entry.post_input_text = event_form.cleaned_data['post_input_text']
+    entry.event_description = event_form.cleaned_data['event_description']
     entry.save()
     posts = Event.objects.all().order_by('-creation_time')
 

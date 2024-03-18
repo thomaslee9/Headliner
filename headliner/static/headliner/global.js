@@ -42,34 +42,34 @@ function displayError(message) {
 function updateList(items) {
     let list = document.getElementById("events-container")
     
-    let existingPostIds = new Set();
-    let existingPosts = document.querySelectorAll('.event-div');
-    existingPosts.forEach(post => {
-        let postId = post.id.replace('id_event_div_', '');
-        existingPostIds.add(parseInt(postId));
+    let existingEventIds = new Set();
+    let existingEvents = document.querySelectorAll('.event-div');
+    existingEvents.forEach(event => {
+        let eventId = event.id.replace('id_event_div_', '');
+        existingEventIds.add(parseInt(eventId));
     });
 
     for(let event of items['events']) {
-        if (!existingPostIds.has(event.id)){
-            list.prepend(makePostElement(event))
+        if (!existingEventIds.has(event.id)){
+            list.prepend(makeEventElement(event))
         }
 
     }
 }
 //makes the post element
-function makePostElement(item) {
+function makeEventElement(item) {
     let element = document.createElement('div');
-    element.className = 'post-div';
-    element.id = 'id_post_div_' + item.id;
+    element.className = 'event-div';
+    element.id = 'id_event_div_' + item.id;
     let format = { hour: 'numeric', minute: 'numeric' };
     let date = new Date(item.creation_time);
     let localDateString = date.toLocaleDateString();
     let localTimeString = date.toLocaleTimeString('en-US', format);
     element.innerHTML = `
-        <a href="${`/other_profile/${item.username}/`}" class="post-name" id="id_post_profile_${item.id}">Post by ${item.first_name} ${item.last_name}</a>
-        <span id="id_post_text_${ item.id }" class="post-text">${item.text}</span>
-        <span id="id_post_date_time_${item.id}" class="post-date">${ localDateString } ${localTimeString}</span>
-        <div id=comments-for-post-${ item.id }></div>
+        <a href="${`/other_profile/${item.username}/`}" class="event-name" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
+        <span id="id_event_text_${ item.id }" class="event-text">${item.text}</span>
+        <span id="id_event_date_time_${item.id}" class="event-date">${ localDateString } ${localTimeString}</span>
+        <div id=comments-for-event-${ item.id }></div>
     `;
     return element
 }
