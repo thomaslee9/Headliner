@@ -37,12 +37,14 @@ createEvent.html -->
         {{ error }}
     </div>
 
-    <form action="{% url 'create_event' %}" id="event_form" method = "POST">
-        <table>
-            {{form.as_table}}
-        </table>
-        {% csrf_token %}
-        <button id="id_post_button">Submit</button>
-    </form>
+    <div class="content">
+        <form action="{% url 'create_event' %}" id="event_form" method = "POST">
+            <table>
+                {{form.as_table}}
+            </table>
+            {% csrf_token %}
+            <button id="id_post_button">Submit</button>
+        </form>
+    </div>
 
 </body>

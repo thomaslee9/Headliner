@@ -29,45 +29,11 @@ login.html -->
     </header>
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <div class="box" id="status">
-        {{ status }}
-    </div>
-
-    <div class="box" id="error">
-        {{ error }}
-    </div>
-
-    <form action="{% url 'global' %}" id="event_form" method = "POST">
-        <table>
-            {{form.as_table}}
-        </table>
-        {% csrf_token %}
-        <button id="id_post_button">Submit</button>
-    </form>
-    <div id="events-container">
-=======
-        <form action="{% url 'global' %}" method="POST" class="center-form" enctype="multipart/form-data">
-=======
     <div class="box" id="status">{{ status }}</div>
     <div class="box" id="error">{{ error }}</div>
 
     <div class="content">
 
-        <form action="{% url 'global' %}" method="POST" class="event-form" enctype="multipart/form-data">
->>>>>>> 11e586b54e9095a7360b298f9a424838a9340fe6
-            <table>
-                {{ form.as_table }}
-            </table>
-            {% csrf_token %}
-            <button id="id_post_button">Submit</button>
-        </form>
-<<<<<<< HEAD
-        <div id="events-container" class="center-posts"></div>
->>>>>>> origin
-=======
->>>>>>> 11e586b54e9095a7360b298f9a424838a9340fe6
     </div>
     <div id="events-container" class="center-posts"></div>
     <script>
