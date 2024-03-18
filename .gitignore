@@ -1,4 +1,5 @@
 headliner/migrations
 headliner/__pycache__
+headliner/__pycache__/__init__.cpython-310.pyc
 team30/__pycache__
 db.sqlite3
