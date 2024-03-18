@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from headliner.models import Event
 from django.utils import timezone
 from headliner.forms import EventForm
+from django.http import HttpResponse
+
 
 import json
 import datetime
@@ -37,9 +39,9 @@ def register_action(request):
 def global_action(request):
     user = request.user
     if request.method == 'GET':
-        p = EventForm()
+        event_form = EventForm()
         events = Event.objects.all().order_by('-creation_time')
-        context = {'user': user, 'form': p, 'entries': events}
+        context = {'user': user, 'form': event_form, 'entries': events}
         return render(request, 'headliner/global.html', context)
 
     entry = Event()
@@ -57,6 +59,26 @@ def global_action(request):
     context = { 'user': user, 'form': event_form, 'entries': posts}
     return render(request, 'headliner/global.html', context)
 
-    context = { 'user': user, 'form': post_form, 'entries': posts}
-    return render(request, 'headliner/global.html', context)
+def get_global(request):
+    if not request.user.is_authenticated:
+        return _my_json_error_response("You must be logged in to do this operation", status=401)
+    response_data = {}
+    response_data['events'] = []
+    for event_item in Event.objects.all():
+        event_item = {
+            'id': event_item.id,
+            'text': event_item.event_description,
+            'username': event_item.created_by.username,
+            'first_name': event_item.created_by.first_name,
+            'last_name': event_item.created_by.last_name,
+            'creation_time': event_item.creation_time.isoformat(),
+        }
+        response_data['events'].append(event_item)
 
+    response_json = json.dumps(response_data)
+    return HttpResponse(response_json, content_type='application/json')
+
+def _my_json_error_response(message, status=200):
+    # You can create your JSON by constructing the string representation yourself (or just use json.dumps)
+    response_json = '{"error": "' + message + '"}'
+    return HttpResponse(response_json, content_type='application/json', status=status)
