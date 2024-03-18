@@ -50,11 +50,33 @@ headliner.css */
     text-decoration: none;
 }
 
-#register_link {
-    font-size: 20px;
+.event-box {
+    background-color: lightblue;
+    width: 350px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: darkblue;
+    margin: 8px;
+    font-family: Helvetica;
+
+    font-size: 30px;
+    font-weight: bold;
     color: darkblue;
     text-decoration: none;
 }
+
+#register_link {
+    font-size: 26px;
+    color: darkblue;
+    text-decoration: none;
+}
+
+#login_link {
+    font-size: 26px;
+    color: darkblue;
+    text-decoration: none;
+}
+
 .content {
     max-width: 800px;
 
