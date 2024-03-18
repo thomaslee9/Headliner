@@ -1,6 +1,6 @@
 <!-- 17-437 Team30
 Headliner App 
-login.html -->
+register.html -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,13 +12,13 @@ login.html -->
 <body>
 
     <header id="header_div">
-        <div id="site_name">
+        <div class="box" id="site_name">
             Headliner
-        </div>div>
+        </div>
 
-        <a id="register_link" class="box" href="register"> Register </a>
+        <a id="login_link" class="box" href="log-in"> Login </a>
 
-        <div id="page_name" class="box"> Login </div>
+        <div id="page_name" class="box"> Register </div>
 
     </header>
 
@@ -31,12 +31,12 @@ login.html -->
         {{ error }}
     </div>
 
-    <form action="log-in" id="login_form" method="POST">
+    <form action="register" id="register_form" method="POST">
 
         <table>
             {{form.as_table}}
         </table>
-        <button id="login_button" type="submit">Login</button>
+        <button id="register_button" type="submit">Register</button>
         {% csrf_token %}
     </form>
 
