@@ -90,3 +90,31 @@ headliner.css */
     font-style: bold;
     color: darkblue;
 }
+
+.comment-div {
+    background-color: lightblue;
+    width: 270px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: cornflowerblue;
+    margin: 5px;
+    margin-left: 4vw;
+    font-family: Helvetica;
+    font-size: 20px;
+    font-style: bold;
+    color: cornflowerblue;
+}
+
+.vote-div {
+    background-color: cadetblue;
+    width: 100px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: lightblue;
+    margin: 2px;
+    margin-left: 2vw;
+    font-family: Helvetica;
+    font-size: 20px;
+    font-style: bold;
+    color: lightblue;
+}

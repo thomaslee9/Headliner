@@ -58,6 +58,7 @@ function updateList(items) {
 }
 //makes the post element
 function makeEventElement(item) {
+    // Build Event element
     let element = document.createElement('div');
     element.className = 'event-div';
     element.id = 'id_event_div_' + item.id;
@@ -66,11 +67,30 @@ function makeEventElement(item) {
     let localDateString = date.toLocaleDateString();
     let localTimeString = date.toLocaleTimeString('en-US', format);
     element.innerHTML = `
-        <a href="${`/other_profile/${item.username}/`}" class="event-name" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
-        <span id="id_event_text_${ item.id }" class="event-text">${item.text}</span>
-        <span id="id_event_date_time_${item.id}" class="event-date">${ localDateString } ${localTimeString}</span>
-        <div id=comments-for-event-${ item.id }></div>
+        <a href="${`/other_profile/${item.username}/`}" class="event-name" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}:</a>
+        <span id="id_event_text_${ item.id }" class="event-text"> ${item.text}</span>
+        <span id="id_event_date_time_${item.id}" class="event-date"> Posted on: ${ localDateString } ${localTimeString}</span>
     `;
+
+    // Build Upvote / Downvote Element for this Event post
+    let voteDiv = document.createElement('div');
+    voteDiv.className = 'vote-div';
+    voteDiv.id = 'id_vote_div_' + item.id;
+    voteDiv.innerHTML = `
+        <div> Vote: 👍 👎</div>
+    `;
+    element.appendChild(voteDiv)
+
+    // Build Comment Element for this Event post
+    let commentDiv = document.createElement('div');
+    commentDiv.className = 'comment-div';
+    commentDiv.id = 'id_comment_div_' + item.id;
+    commentDiv.innerHTML = `
+        <div id="comments-for-event-${ item.id }"></div>
+        <div id="comment-div">Comments go here...</div>
+    `;
+    element.appendChild(commentDiv)
+
     return element
 }
 
