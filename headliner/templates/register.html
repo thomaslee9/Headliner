@@ -1,0 +1,41 @@
+<!-- 17-437 Team30
+Headliner App 
+register.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/headliner/headliner.css"/>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <header id="header_div">
+        <div id="site_name">
+            Headliner
+        </div>div>
+
+        <a id="login_link" class="box" href="log-in"> Login </a>
+
+        <div id="page_name" class="box"> Register </div>
+
+    </header>
+
+
+    <div class="box" id="status">
+        {{ status }}
+    </div>
+
+    <div class="box" id="error">
+        {{ error }}
+    </div>
+
+    <form action="register" id="register_form"method="POST">
+        {% csrf_token %}
+        <div class="box" id="username_div">
+            <label for="username">Username</label>
+
+</body>
+
+</html>
