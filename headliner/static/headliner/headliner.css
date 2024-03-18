@@ -8,6 +8,20 @@ headliner.css */
     height: 8vh;
 }
 
+.title {
+    background-color: darkblue;
+    width: 100vw;
+    height: 8vh;
+    border-width: 5px;
+    border-style: solid;
+    border-color: cornflowerblue;
+    margin: 6px;
+    font-family: Arial; 
+    font-size: 36px;
+    font-style: bold;
+    color: lightblue;
+}
+
 .box {
     background-color: lightblue;
     width: 200px;
