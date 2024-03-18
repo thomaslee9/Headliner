@@ -26,9 +26,10 @@ login.html -->
 
     </header>
 
+    <div class="box" id="status">{{ status }}</div>
+    <div class="box" id="error">{{ error }}</div>
+
     <div class="content">
-        <div class="box" id="status">{{ status }}</div>
-        <div class="box" id="error">{{ error }}</div>
 
         <form action="{% url 'global' %}" method="POST" class="event-form" enctype="multipart/form-data">
             <table>
@@ -37,8 +38,8 @@ login.html -->
             {% csrf_token %}
             <button id="id_post_button">Submit</button>
         </form>
-        <div id="events-container" class="center-posts"></div>
     </div>
+    <div id="events-container" class="center-posts"></div>
     <script>
         window.onload = function() {
             function updatePostsAndComments() {
