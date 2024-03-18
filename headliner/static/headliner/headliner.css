@@ -78,7 +78,9 @@ headliner.css */
 }
 
 .center-posts {
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
 }
 .event-div {
     display: flex;
@@ -97,6 +99,9 @@ headliner.css */
 
 .post-container {
     text-align: left;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: normal; 
 }
 
 #login-form {
@@ -146,15 +151,21 @@ headliner.css */
 
 .event-div {
     background-color: cornflowerblue;
-    width: 310px;
+    width: 310px; 
     border-width: 2px;
     border-style: solid;
     border-color: darkblue;
     margin: 5px;
+    padding: 10px; 
     font-family: Helvetica;
     font-size: 20px;
     font-style: bold;
     color: darkblue;
+    display: inline-block;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
 }
 
 .tag-div {
@@ -166,8 +177,8 @@ headliner.css */
     margin: 5px;
     font-family: Helvetica;
     font-size: 22px;
-    font-style: bold;
     color: darkred;
+
 }
 
 .comment-div {
