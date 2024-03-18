@@ -1,12 +1,28 @@
+# 17-437 Team 30
+
 from django.shortcuts import render
+from django.shortcuts import redirect, reverse
+
+from headliner.forms import LoginForm
+from headliner.forms import RegisterForm
+
 from django.contrib.auth.decorators import login_required
 from headliner.models import Event
 from django.utils import timezone
 from headliner.forms import EventForm
 
-
-
+import json
+import datetime
 # Create your views here.
+
+def login_action(request):
+    context = {}
+    if request.user.is_authenticated:
+        context['status'] = "User is authenticated."
+        return redirect(reverse('global'))
+    
+    return render(request, 'headliner/login.html', {})
+
 @login_required
 def global_action(request):
     user = request.user
@@ -30,3 +46,4 @@ def global_action(request):
     posts = Event.objects.all().order_by('-creation_time')
     context = { 'user': user, 'form': post_form, 'entries': posts}
     return render(request, 'headliner/global.html', context)
+
