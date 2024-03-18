@@ -1,0 +1,35 @@
+{% extends "headliner/base.html" %}
+{% load static %}
+
+{% block head %}
+    <script src="{% static 'headliner/global.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block user-links %}
+    <div class="link-body">
+    </div>
+{% endblock %}
+
+{% block page-name %}
+    Global Stream
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'global' %}" method = "POST">
+        <table>
+            {{form.as_table}}
+        </table>
+        {% csrf_token %}
+    </form>
+    <div id="posts-container">
+    </div>
+    <script>
+        window.onload = function() {
+            function updatePostsAndComments() {
+                getList();
+                setTimeout(updatePostsAndComments, 1000);
+            }
+            updatePostsAndComments();
+        };
+    </script>
+{% endblock %}
