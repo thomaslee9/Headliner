@@ -160,6 +160,9 @@ def global_action(request):
     entry.creation_time=timezone.now()
 
     event_form = EventForm(request.POST)
+    if 'event_picture' in request.FILES:
+        entry.event_picture = request.FILES['event_picture']
+
     if not event_form.is_valid():
         context = { 'form': event_form, 'user':user }
         return render(request, 'headliner/global.html', context)
@@ -183,7 +186,7 @@ def get_global(request):
     response_data = {}
     response_data['events'] = []
     for event_item in Event.objects.all():
-        event_item = {
+        event_data = {
             'id': event_item.id,
             'text': event_item.event_description,
             'username': event_item.created_by.username,
@@ -191,7 +194,9 @@ def get_global(request):
             'last_name': event_item.created_by.last_name,
             'creation_time': event_item.creation_time.isoformat(),
         }
-        response_data['events'].append(event_item)
+        if event_item.event_picture:
+            event_data['picture'] = event_item.event_picture.url
+        response_data['events'].append(event_data)
 
     response_json = json.dumps(response_data)
     return HttpResponse(response_json, content_type='application/json')
