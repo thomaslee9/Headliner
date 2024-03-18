@@ -31,10 +31,14 @@ register.html -->
         {{ error }}
     </div>
 
-    <form action="register" id="register_form"method="POST">
+    <form action="register" id="register_form" method="POST">
+
+        <table>
+            {{form.as_table}}
+        </table>
+        <button id="register_button" type="submit">Register</button>
         {% csrf_token %}
-        <div class="box" id="username_div">
-            <label for="username">Username</label>
+    </form>
 
 </body>
 
