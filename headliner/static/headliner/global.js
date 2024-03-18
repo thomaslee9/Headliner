@@ -72,6 +72,15 @@ function makeEventElement(item) {
         <span id="id_event_date_time_${item.id}" class="event-date"> Posted on: ${ localDateString } ${localTimeString}</span>
     `;
 
+    // Build Tag Element for this Event post
+    let tagDiv = document.createElement('div');
+    tagDiv.className = 'tag-div';
+    tagDiv.id = 'id_tag_div_' + item.id;
+    tagDiv.innerHTML = `
+        <div> 🔥TRENDING🔥 </div>
+    `;
+    element.appendChild(tagDiv)
+
     // Build Upvote / Downvote Element for this Event post
     let voteDiv = document.createElement('div');
     voteDiv.className = 'vote-div';
