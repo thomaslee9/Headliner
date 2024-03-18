@@ -91,6 +91,19 @@ headliner.css */
     color: darkblue;
 }
 
+.tag-div {
+    background-color: IndianRed;
+    width: 160px;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: crimson;
+    margin: 5px;
+    font-family: Helvetica;
+    font-size: 22px;
+    font-style: bold;
+    color: darkred;
+}
+
 .comment-div {
     background-color: lightblue;
     width: 270px;
