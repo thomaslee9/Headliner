@@ -26,29 +26,24 @@ login.html -->
 
     </header>
 
+    <div class="content">
+        <div class="box" id="status">{{ status }}</div>
+        <div class="box" id="error">{{ error }}</div>
 
-    <div class="box" id="status">
-        {{ status }}
-    </div>
-
-    <div class="box" id="error">
-        {{ error }}
-    </div>
-
-    <form action="{% url 'global' %}" id="event_form"method = "POST">
-        <table>
-            {{form.as_table}}
-        </table>
-        {% csrf_token %}
-        <button id="id_post_button">Submit</button>
-    </form>
-    <div id="events-container">
+        <form action="{% url 'global' %}" method="POST" class="center-form" enctype="multipart/form-data">
+            <table>
+                {{ form.as_table }}
+            </table>
+            {% csrf_token %}
+            <button id="id_post_button">Submit</button>
+        </form>
+        <div id="events-container" class="center-posts"></div>
     </div>
     <script>
         window.onload = function() {
             function updatePostsAndComments() {
                 getList();
-                setTimeout(updatePostsAndComments, 1000);
+                setTimeout(updatePostsAndComments, 5000);
             }
             updatePostsAndComments();
         };
