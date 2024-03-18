@@ -65,6 +65,13 @@ headliner.css */
     text-decoration: none;
 }
 
+.button {
+    background-color: cadetblue;
+    font: 15px;
+    font-weight: bold;
+    color: darkblue;
+}
+
 #register_link {
     font-size: 26px;
     color: darkblue;
