@@ -30,7 +30,7 @@ login.html -->
         <div class="box" id="status">{{ status }}</div>
         <div class="box" id="error">{{ error }}</div>
 
-        <form action="{% url 'global' %}" method="POST" class="center-form" enctype="multipart/form-data">
+        <form action="{% url 'global' %}" method="POST" class="event-form" enctype="multipart/form-data">
             <table>
                 {{ form.as_table }}
             </table>
