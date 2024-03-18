@@ -1,4 +1,6 @@
-# 17-437 Team 30
+# 17-437 Team30
+# Headliner App
+# views.py
 
 from django.shortcuts import render
 from django.shortcuts import redirect, reverse
@@ -22,6 +24,13 @@ def login_action(request):
         return redirect(reverse('global'))
     
     return render(request, 'headliner/login.html', {})
+
+
+def register_action(request):
+    context = {}
+
+    return render(request, 'headliner/register.html', {})
+
 
 @login_required
 def global_action(request):
