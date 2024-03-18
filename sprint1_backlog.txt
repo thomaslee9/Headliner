@@ -1,0 +1,18 @@
+17-427 Team30
+Sprint #1 Backlog
+
+Thomas
+- Create new Django app, and added all required folder hierarchy and dependencies
+- Created Login, Register, Event Page, and worked on Global Stream page
+- Polished app navigation & style
+Bhavya  
+- Implemented create event functionality
+- Initial CSS styling 
+Carter
+- Created all django models
+- Designed and created HTML mockups and logo
+Ishan 
+- Created discover event page  
+- Added discover event page functionality including AJAX requests for new page
+- Added image posting functionality 
+
