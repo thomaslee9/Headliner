@@ -22,9 +22,12 @@ login.html -->
 
         <a id="global_link" class="box" href="{% url 'global' %}"> Global </a>
 
+        <a id="create_event_link" class="box" href="{% url 'create_event' %}"> Create </a>
+
         <div id="page_name" class="box"> Global Event Stream </div>
 
     </header>
+
 
     <div class="box" id="status">{{ status }}</div>
     <div class="box" id="error">{{ error }}</div>
