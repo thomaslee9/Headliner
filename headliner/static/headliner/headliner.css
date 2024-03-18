@@ -18,6 +18,30 @@ headliner.css */
 }
 
 #site_name {
+=======
+.title {
+    background-color: darkblue;
+    width: 100vw;
+    height: 8vh;
+    border-width: 5px;
+    border-style: solid;
+    border-color: cornflowerblue;
+    margin: 6px;
+    font-family: Arial; 
+    font-size: 36px;
+    font-style: bold;
+    color: lightblue;
+}
+
+.box {
+    background-color: lightblue;
+    width: 200px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: darkblue;
+    margin: 8px;
+    font-family: Helvetica;
+
     font-size: 30px;
     font-weight: bold;
     color: darkblue;
@@ -55,16 +79,72 @@ headliner.css */
 .post-container {
     text-align: center;
 }
-.box {
-    background-color: lightblue;
-    width: 200px;
+
+#event_form {
+    background-color: darkblue;
+    width: 270px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: lightblue;
+    margin: 8px;
+    font-family: Helvetica;
+
+    font-size: 20px;
+    font-style: bold;
+    color: lightblue;
+}
+
+
+.event-div {
+    background-color: cornflowerblue;
+    width: 310px;
     border-width: 2px;
     border-style: solid;
     border-color: darkblue;
-    margin: 8px;
+    margin: 5px;
     font-family: Helvetica;
     font-size: 20px;
-    font-weight: bold;
+    font-style: bold;
     color: darkblue;
-    text-align: center;
+}
+
+.tag-div {
+    background-color: IndianRed;
+    width: 160px;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: crimson;
+    margin: 5px;
+    font-family: Helvetica;
+    font-size: 22px;
+    font-style: bold;
+    color: darkred;
+}
+
+.comment-div {
+    background-color: lightblue;
+    width: 270px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: cadetblue;
+    margin: 5px;
+    margin-left: 4vw;
+    font-family: Helvetica;
+    font-size: 20px;
+    font-style: bold;
+    color: cadetblue;
+}
+
+.vote-div {
+    background-color: cadetblue;
+    width: 100px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: lightblue;
+    margin: 2px;
+    margin-left: 2vw;
+    font-family: Helvetica;
+    font-size: 20px;
+    font-style: bold;
+    color: lightblue;
 }

@@ -13,11 +13,17 @@ login.html -->
 
 <body>
 
-    <header class="header">
-        <div class="container">
-            <div id="site_name">Headliner</div>
-            <a href="register" id="register_link">Register</a>
+    <header id="header_div">
+        <div class="title" id="site_name">
+            Headliner ⛲
         </div>
+
+        <a id="logout_link" class="box" href="{% url 'logout' %}"> Logout </a>
+
+        <a id="global_link" class="box" href="{% url 'global' %}"> Global </a>
+
+        <div id="page_name" class="box"> Global Event Stream </div>
+
     </header>
 
     <div class="content">
