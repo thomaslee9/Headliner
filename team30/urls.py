@@ -30,6 +30,7 @@ urlpatterns = [
 
     path('', views.login_action, name='home'),
     path('log-in', views.login_action, name='login'),
+    path('logout', views.logout_action, name='logout'),
     path('register', views.register_action, name='register'),
     path('global', views.global_action, name='global'),
 
