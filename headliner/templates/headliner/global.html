@@ -13,40 +13,31 @@ login.html -->
 
 <body>
 
-    <header id="header_div">
-        <div class="box" id="site_name">
-            Headliner
+    <header class="header">
+        <div class="container">
+            <div id="site_name">Headliner</div>
+            <a href="register" id="register_link">Register</a>
         </div>
-
-        <a id="register_link" class="box" href="register"> Register </a>
-
-        <div id="page_name" class="box"> Login </div>
-
     </header>
 
+    <div class="content">
+        <div class="box" id="status">{{ status }}</div>
+        <div class="box" id="error">{{ error }}</div>
 
-    <div class="box" id="status">
-        {{ status }}
-    </div>
-
-    <div class="box" id="error">
-        {{ error }}
-    </div>
-
-    <form action="{% url 'global' %}" method = "POST">
-        <table>
-            {{form.as_table}}
-        </table>
-        {% csrf_token %}
-        <button id="id_post_button">Submit</button>
-    </form>
-    <div id="events-container">
+        <form action="{% url 'global' %}" method="POST" class="center-form" enctype="multipart/form-data">
+            <table>
+                {{ form.as_table }}
+            </table>
+            {% csrf_token %}
+            <button id="id_post_button">Submit</button>
+        </form>
+        <div id="events-container" class="center-posts"></div>
     </div>
     <script>
         window.onload = function() {
             function updatePostsAndComments() {
                 getList();
-                setTimeout(updatePostsAndComments, 1000);
+                setTimeout(updatePostsAndComments, 5000);
             }
             updatePostsAndComments();
         };

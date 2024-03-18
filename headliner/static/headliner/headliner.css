@@ -4,10 +4,57 @@ headliner.css */
 
 .header {
     background-color: aquamarine;
-    width: 100vh;
-    height: 8vh;
+    padding: 20px 0;
+    text-align: center;
 }
 
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#site_name {
+    font-size: 30px;
+    font-weight: bold;
+    color: darkblue;
+    text-decoration: none;
+}
+
+#register_link {
+    font-size: 20px;
+    color: darkblue;
+    text-decoration: none;
+}
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.center-form {
+    text-align: center;
+}
+
+.center-posts {
+    text-align: center;
+}
+.event-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.image-container {
+    margin-bottom: 10px;
+}
+
+.post-container {
+    text-align: center;
+}
 .box {
     background-color: lightblue;
     width: 200px;
@@ -16,35 +63,8 @@ headliner.css */
     border-color: darkblue;
     margin: 8px;
     font-family: Helvetica;
-    font-size: 30px;
-    font-style: bold;
+    font-size: 20px;
+    font-weight: bold;
     color: darkblue;
-}
-
-#register_form {
-    background-color: darkblue;
-    width: 270px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: lightblue;
-    margin: 8px;
-    font-family: Helvetica;
-
-    font-size: 20px;
-    font-style: bold;
-    color: lightblue;
-}
-
-#login_form {
-    background-color: darkblue;
-    width: 270px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: lightblue;
-    margin: 8px;
-    font-family: Helvetica;
-
-    font-size: 20px;
-    font-style: bold;
-    color: lightblue;
+    text-align: center;
 }
