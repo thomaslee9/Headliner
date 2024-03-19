@@ -241,4 +241,18 @@ headliner.css */
 .map {
     width: auto;
     height: 300px;
-  }
+}
+
+.search-container {
+    position: relative;
+    width: 300px; /* Adjust width as needed */
+    margin: 20px auto; /* Center the search bar */
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; /* Thin border */
+    border-radius: 5px;
+    box-sizing: border-box;
+}
