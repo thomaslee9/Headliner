@@ -237,3 +237,8 @@ headliner.css */
     font-style: bold;
     color: lightblue;
 }
+
+.map {
+    width: auto;
+    height: 300px;
+  }

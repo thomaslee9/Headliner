@@ -45,6 +45,7 @@ createEvent.html -->
             {% csrf_token %}
             <button id="id_post_button">Submit</button>
         </form>
+        <div class="map" id="gmp-map"></div>
     </div>
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc&libraries=places,marker&callback=initMap&solution_channel=GMP_QB_addressselection_v2_cABC" async defer></script>
 </body>

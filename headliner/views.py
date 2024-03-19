@@ -210,7 +210,7 @@ def create_event_action(request):
 
     if not event_form.is_valid():
         context = { 'form': event_form, 'user':user }
-        return render(request, 'headliner/global.html', context)
+        return render(request, 'headliner/createEvent.html', context)
     
     entry.event_description = event_form.cleaned_data['event_description']
     entry.title = event_form.cleaned_data['title']
