@@ -2,10 +2,14 @@
 Headliner App
 headliner.css */
 
-.header {
+.body {
+    background-color: lightblue;
+}
+
+.ti {
     background-color: aquamarine;
-    padding: 20px 0;
-    text-align: center;
+    /* padding: 20px 0; */
+    /* text-align: center; */
 }
 
 .container {
@@ -21,23 +25,9 @@ headliner.css */
     text-align: center;
 }
 
-.title {
-    background-color: darkblue;
-    width: 100vw;
-    height: 8vh;
-    border-width: 5px;
-    border-style: solid;
-    border-color: cornflowerblue;
-    margin: 6px;
-    font-family: Arial; 
-    font-size: 36px;
-    font-style: bold;
-    color: lightblue;
-}
-
 .box {
     background-color: lightblue;
-    width: 200px;
+    /* width: 200px; */
     border-width: 2px;
     border-style: solid;
     border-color: darkblue;
@@ -85,21 +75,7 @@ headliner.css */
 }
 
 .content {
-    max-width: 800px;
-
-    background-color: darkblue;
-    width: 330px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: lightblue;
-    /* margin: 8px; */
-    font-family: Helvetica;
-
-    font-size: 18px;
-    font-style: bold;
-    color: lightblue;
-
-    text-align: left;
+    background-color: lightsalmon;
 }
 
 .center-form {
@@ -109,7 +85,7 @@ headliner.css */
 .center-posts {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
 }
 .event-div {
     display: flex;
@@ -128,9 +104,9 @@ headliner.css */
 
 .post-container {
     text-align: left;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal; 
+    white-space: normal;
 }
 
 #login-form {
@@ -180,20 +156,20 @@ headliner.css */
 
 .event-div {
     background-color: cornflowerblue;
-    width: 310px; 
+    width: 310px;
     border-width: 2px;
     border-style: solid;
     border-color: darkblue;
     margin: 5px;
-    padding: 10px; 
+    padding: 10px;
     font-family: Helvetica;
     font-size: 20px;
     font-style: bold;
     color: darkblue;
     display: inline-block;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
