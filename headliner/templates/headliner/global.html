@@ -35,12 +35,26 @@ login.html -->
     <div class="content">
         <div class="search-container">
             <input type="text" id="search-input" placeholder="Search...">
+            <button class="location-toggle" id="location-toggle" onclick="toggleFilter()"></button>
             <div id="autocomplete-results"></div>
         </div>
     </div>
 
     <div id="events-container" class="center-posts"></div>
     <script>
+        let isFilterByLocation = false;
+
+        function toggleFilter() {
+            isFilterByLocation = !isFilterByLocation;
+            document.getElementById('search-input').value = ''; // Clear search input text
+
+            // Change button background color based on filter mode
+            let filterToggle = document.getElementById('location-toggle');
+            filterToggle.style.backgroundColor = isFilterByLocation ? 'grey' : 'white'; // Set background to grey if filtering by location
+
+            updateEvents('');
+        }
+
         window.onload = function() {
             let searchInput = document.getElementById('search-input');
             searchInput.addEventListener('keypress', function(event) {
@@ -51,7 +65,7 @@ login.html -->
             });
             
             function updateEvents(searchTerm = '') {
-                getList(searchTerm);
+                getList(searchTerm, isFilterByLocation);
             }
             updateEvents();
         };

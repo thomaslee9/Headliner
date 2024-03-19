@@ -235,6 +235,7 @@ def get_global(request):
             'id': event_item.id,
             'title': event_item.title,
             'text': event_item.event_description,
+            'location': event_item.location,
             'username': event_item.created_by.username,
             'first_name': event_item.created_by.first_name,
             'last_name': event_item.created_by.last_name,
