@@ -11,7 +11,7 @@ class Event(models.Model):
     event_picture = models.ImageField(upload_to='event_pictures/', null=True, blank=True, verbose_name='Add a Photo')
     event_description = models.TextField(blank=True, verbose_name='Description')
     title = models.CharField(max_length=100, verbose_name='Title', null=True)
-    location = models.CharField(max_length=100, verbose_name='Location', null=True)
+    location = models.CharField(max_length=300, verbose_name='Location', null=True)
     date = models.DateField(verbose_name='Date', null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price', null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="entry_creators", verbose_name='Created By')

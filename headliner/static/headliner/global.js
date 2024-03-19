@@ -1,3 +1,12 @@
+"use strict";
+
+const CONFIGURATION = {
+    "ctaTitle": "Checkout",
+    "mapOptions": {"center":{"lat":37.4221,"lng":-122.0841},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":true,"zoom":11,"zoomControl":true,"maxZoom":22,"mapId":""},
+    "mapsApiKey": "AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc",
+    "capabilities": {"addressAutocompleteControl":true,"mapDisplayControl":true,"ctaControl":true}
+  };
+
 function getList() {
     let xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function() {
@@ -114,6 +123,60 @@ function makeEventElement(item) {
     element.appendChild(commentDiv)
 
     return element
+}
+
+function fillInAddress(place) {
+    const addressComponents = place.address_components || [];
+    let formattedAddress = '';
+  
+    // Concatenate all address components into a single string
+    for (const component of addressComponents) {
+      formattedAddress += component.long_name + ', ';
+    }
+  
+    // Remove trailing comma and space
+    formattedAddress = formattedAddress.replace(/,\s*$/, '');
+  
+    // Set the value of the input field to the formatted address
+    document.getElementById('id_location').value = formattedAddress;
+  }
+
+function renderAddress(place, map, marker) {
+    if (place.geometry && place.geometry.location) {
+      map.setCenter(place.geometry.location);
+      marker.position = place.geometry.location;
+    } else {
+      marker.position = null;
+    }
+  }
+
+async function initMap() {
+  const {Map} = google.maps;
+  const {AdvancedMarkerElement} = google.maps.marker;
+  const {Autocomplete} = google.maps.places;
+
+  const mapOptions = CONFIGURATION.mapOptions;
+  mapOptions.mapId = mapOptions.mapId || 'DEMO_MAP_ID';
+  mapOptions.center = mapOptions.center || {lat: 37.4221, lng: -122.0841};
+
+  const map = new Map(document.getElementById('gmp-map'), mapOptions);
+  const marker = new AdvancedMarkerElement({map});
+  const autocomplete = new Autocomplete(document.getElementById('id_location'), {
+    fields: ['address_components', 'geometry', 'name'],
+    types: ['address'],
+  });
+
+  autocomplete.addListener('place_changed', () => {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) {
+      // User entered the name of a Place that was not suggested and
+      // pressed the Enter key, or the Place Details request failed.
+      window.alert(`No details available for input: '${place.name}'`);
+      return;
+    }
+    renderAddress(place, map, marker);
+    fillInAddress(place);
+  });
 }
 
 function getCSRFToken() {
