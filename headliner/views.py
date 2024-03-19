@@ -233,6 +233,7 @@ def get_global(request):
     for event_item in Event.objects.all():
         event_data = {
             'id': event_item.id,
+            'title': event_item.title,
             'text': event_item.event_description,
             'username': event_item.created_by.username,
             'first_name': event_item.created_by.first_name,
