@@ -7,21 +7,21 @@ const CONFIGURATION = {
     "capabilities": {"addressAutocompleteControl":true,"mapDisplayControl":true,"ctaControl":true}
   };
 
-function getList() {
+function getList(searchTerm) {
     let xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function() {
         if (this.readyState !== 4) return
-        updatePage(xhr)
+        updatePage(xhr, searchTerm)
     }
 
     xhr.open("GET", "/headliner/get-global", true)
     xhr.send()
 }
 
-function updatePage(xhr) {
+function updatePage(xhr, searchTerm) {
     if (xhr.status === 200) {
         let response = JSON.parse(xhr.responseText)
-        updateList(response)
+        updateList(response, searchTerm)
         return
     }
 
@@ -48,23 +48,19 @@ function displayError(message) {
     let errorElement = document.getElementById("error")
     errorElement.innerHTML = message
 }
-function updateList(items) {
-    let list = document.getElementById("events-container")
+function updateList(items, searchTerm) {
+    let list = document.getElementById("events-container");
+    list.innerHTML = ''; // Clear previous events
     
-    let existingEventIds = new Set();
-    let existingEvents = document.querySelectorAll('.event-div');
-    existingEvents.forEach(event => {
-        let eventId = event.id.replace('id_event_div_', '');
-        existingEventIds.add(parseInt(eventId));
+    let filteredEvents = items.events.filter(event => {
+        return event.title.toLowerCase().includes(searchTerm.toLowerCase());
     });
-    console.log(items['events'])
-    for(let event of items['events']) {
-        if (!existingEventIds.has(event.id)){
-            list.prepend(makeEventElement(event))
-        }
-
+    
+    for (let event of filteredEvents) {
+        list.prepend(makeEventElement(event));
     }
 }
+
 //makes the post element
 function makeEventElement(item) {
     // Build Event element
@@ -85,11 +81,13 @@ function makeEventElement(item) {
             ${pictureElement}
         </div>
         <div class="post-container">
+            <a href="/event/${item.id}" class="event-text" id="id_event_link_${item.id}">${item.title}</a>
+            <br>
             <a href="${`/other_profile/${item.username}/`}" class="event-name" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
             <br>
-            <a href="/event/${item.id}" class="event-text" id="id_event_link_${item.id}">Go to Event Page</a>
             <span id="id_event_text_${ item.id }" class="event-text">${item.text}</span>
-            <span id="id_event_date_time_${item.id}" class="event-date">Posted on: ${ localDateString } ${localTimeString}</span>
+            <br>
+            <span id="id_event_date_time_${item.id}" class="event-date">Posted on: ${ localDateString } </span>
             <div id=comments-for-event-${ item.id }></div>
         </div>
     `;
