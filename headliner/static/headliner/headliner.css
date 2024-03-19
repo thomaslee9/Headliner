@@ -221,6 +221,7 @@ headliner.css */
 
 .search-container {
     position: relative;
+    align-content: flex-start;
     width: 300px; /* Adjust width as needed */
     margin: 20px auto; /* Center the search bar */
 }
@@ -231,4 +232,9 @@ headliner.css */
     border: 1px solid #ccc; /* Thin border */
     border-radius: 5px;
     box-sizing: border-box;
+}
+
+.location-toggle {
+    width: 30px;
+    height: 30px;
 }
