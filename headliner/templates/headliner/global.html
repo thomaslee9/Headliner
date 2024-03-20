@@ -35,20 +35,27 @@ login.html -->
                     <li class="nav-item box">
                         <a id="create_event_link" class="nav-link active fw-bold" aria-current="page" href="{% url 'create_event' %}">Create</a>
                     </li>
+                    <li class="nav-item box">
+                        <a id="attending_link" class="nav-link active fw-bold" aria-current="page"
+                            href="{% url 'global' %}">Attending</a>
+                    </li>
                 </div>
             </ul>
     </nav>
 
-    <nav class="navbar navbar-light justify-content-center">
-        <form class="form-inline">
-            <div class="container">
-                <input type="text" id="search-input" class="form-control mr-sm-2" aria-label="Search" placeholder="Search...">
-                <button class="location-toggl btn btn-outline-success" id="location-toggle"
-                    onclick="toggleFilter()">Location</button>
-            </div>
-            <div id="autocomplete-results"></div>
-        </form>
-    </nav>
+    <div class="search-container">
+
+                <div class="container">
+                    <input type="text" id="search-input" class="form-control mr-sm-2" aria-label="Search"
+                        placeholder="Search...">
+                    <div class="mx-auto p-2">
+                        <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off" onclick="toggleFilter()">
+                        <label class="btn btn-outline-primary" for="btn-check"><img src="{% static 'images/download-2.png' %}"
+                                alt="Map Pin" class="col-md-4"></label>
+                    </div>
+                </div>
+                <div id="autocomplete-results"></div>
+    </div>
 
     {% if status %}
         <div class="box" id="status">{{ status }}</div>
