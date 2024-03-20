@@ -169,6 +169,8 @@ def event_action(request, event_id):
     context['event'] = event
     user = request.user
     if request.method == 'GET':
+        rsvp_form = RSVPForm()
+        context['form'] = rsvp_form
         return render(request, 'headliner/event.html', context)
     
     rsvp_form = RSVPForm(request.POST)
@@ -218,6 +220,45 @@ def global_action(request):
 
     context = { 'user': user, 'form': event_form, 'entries': posts}
     return render(request, 'headliner/global.html', context)
+
+@login_required
+def get_attending(request):
+    if not request.user.is_authenticated:
+        return _my_json_error_response("You must be logged in to do this operation", status=401)
+    response_data = {}
+    response_data['events'] = []
+    user = request.user
+    user_profile = get_object_or_404(Profile, user = user)
+    events_attending = user_profile.attending.all()
+    follower_posts_ids = []
+    for event_item in events_attending:
+        event_data = {
+            'id': event_item.id,
+            'title': event_item.title,
+            'text': event_item.event_description,
+            'location': event_item.location,
+            'username': event_item.created_by.username,
+            'first_name': event_item.created_by.first_name,
+            'last_name': event_item.created_by.last_name,
+            'creation_time': event_item.creation_time.isoformat(),
+        }
+        if event_item.event_picture:
+            event_data['picture'] = event_item.event_picture.url
+        response_data['events'].append(event_data)
+
+    response_json = json.dumps(response_data)
+    return HttpResponse(response_json, content_type='application/json')
+
+@login_required
+def attending_action(request):
+    user = request.user
+    user_profile = get_object_or_404(Profile, user = user)
+    events_attending = user_profile.attending.all()
+    if request.method == 'GET':
+        context = {'user': user, 'entries': events_attending}
+        return render(request, 'headliner/attending.html', context)
+    context = {'user': user, 'entries': events_attending}  
+    return render(request, 'socialnetwork/attending.html', context)
 
 @login_required
 def create_event_action(request):
