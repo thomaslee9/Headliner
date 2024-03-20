@@ -1,42 +1,9 @@
 <!-- 17-437 Team30
-Headliner App 
+Headliner App
 createEvent.html -->
+{% extends "headliner/base.html" %}
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="/static/headliner/headliner.css"/>
-    <script src="{% static 'headliner/global.js' %}" type="text/javascript"></script>
-    <meta charset="UTF-8">
-</head>
-
-<body>
-
-    <header id="header_div">
-        <div class="title" id="site_name">
-            Headliner ⛲
-        </div>
-
-        <a id="logout_link" class="box" href="{% url 'logout' %}"> Logout </a>
-
-        <a id="global_link" class="box" href="{% url 'global' %}"> Global </a>
-
-        <a id="create_event_link" class="box" href="{% url 'create_event' %}"> Create </a>
-
-        <div id="page_name" class="box"> Create Event </div>
-
-    </header>
-
-
-    <div class="box" id="status">
-        {{ status }}
-    </div>
-
-    <div class="box" id="error">
-        {{ error }}
-    </div>
-
+{% block content %}
     <div class="content">
         <form action="{% url 'create_event' %}" id="event_form" method = "POST" enctype="multipart/form-data">
             <table>
@@ -47,5 +14,7 @@ createEvent.html -->
         </form>
         <div class="map" id="gmp-map"></div>
     </div>
+{% endblock %}
+{% block script %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc&libraries=places,marker&callback=initMap&solution_channel=GMP_QB_addressselection_v2_cABC" async defer></script>
-</body>
+{% endblock %}
