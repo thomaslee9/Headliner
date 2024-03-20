@@ -1,45 +1,20 @@
 <!-- 17-437 Team30
-Headliner App 
+Headliner App
 login.html -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="/static/headliner/headliner.css"/>
-    <meta charset="UTF-8">
-</head>
-
-<body>
-
-    <header id="header_div">
-        <div class="title" id="site_name">
-            Headliner ⛲
-        </div>
-
+{% extends "headliner/base.html" %}
+{% load static %}
+{% block navbar %}{% endblock %}
+{% block content %}
+    <header>
         <a id="register_link" class="box" href="register"> Register </a>
-
         <div id="page_name" class="box"> Login </div>
-
     </header>
 
-
-    <div class="box" id="status">
-        {{ status }}
-    </div>
-
-    <div class="box" id="error">
-        {{ error }}
-    </div>
-
     <form action="log-in" id="login-form" method="POST">
-
         <table>
             {{form.as_table}}
         </table>
         <button id="login_button" type="submit">Login</button>
         {% csrf_token %}
     </form>
-
-</body>
-
-</html>
+{% endblock %}
