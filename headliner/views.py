@@ -8,13 +8,13 @@ from django.urls import reverse
 from django.http import HttpResponse, Http404
 
 from headliner.forms import LoginForm
-from headliner.forms import RegisterForm
+from headliner.forms import RegisterForm, RSVPForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-from headliner.models import Event
+from headliner.models import Event, Profile
 from django.utils import timezone
 from headliner.forms import EventForm
 from django.http import HttpResponse
@@ -63,6 +63,10 @@ def login_action(request):
     login(request, newUser)
     context['form'] = form
     context['status'] = status
+    profile, created = Profile.objects.get_or_create(user=newUser) 
+    profile.save()
+
+
     
     return redirect(reverse('global'))
 
@@ -133,6 +137,8 @@ def register_action(request):
 
     context['form'] = form
     context['status'] = status
+    profile, created = Profile.objects.get_or_create(user=newUser) 
+    profile.save()
 
     return redirect(reverse('global'))
 
@@ -157,10 +163,32 @@ def get_photo(request, event_id):
 
 @login_required
 def event_action(request, event_id):
+
     context = {}
     event = get_object_or_404(Event, id=event_id)
     context['event'] = event
+    user = request.user
+    if request.method == 'GET':
+        return render(request, 'headliner/event.html', context)
+    
+    rsvp_form = RSVPForm(request.POST)
+    if not rsvp_form.is_valid():
+        context = { 'form': rsvp_form, 'event':event }
+        return render(request, 'headliner/event.html', context)
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = None
+        return render(request, 'headliner/event.html', context)
+    
+    is_attending = profile.attending.filter(id=event.id).exists()
+
+    if not is_attending:    
+        profile.attending.add(event)
+    
+    context = { 'form': rsvp_form, 'event':event }
     return render(request, 'headliner/event.html', context)
+
 
 
 
