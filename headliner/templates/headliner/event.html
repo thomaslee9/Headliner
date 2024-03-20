@@ -41,14 +41,17 @@ event.html -->
         <br>
         Price: {{event.price}}
         <br>
-        <img src="{% url 'photo' event.id %}" alt="Event Picture" class="event-picture">
+        <img src="{{event.event_picture.url}}" alt="Event Picture" class="event-picture">
     </div>
 
     <br>
 
     <div class="box">
         I'm going!
-        <button class="button" id="rsvp_button">RSVP</button>
+        <form action="{% url 'event' event.id%}" id="rsvp_form" method = "POST">
+            {% csrf_token %}
+            <button class="button" id="rsvp_button">RSVP</button>
+        </form>
     </div>
 
 

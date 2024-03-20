@@ -63,10 +63,8 @@ class RegisterForm(forms.Form):
         # Return Cleaned Data
         return username
 
-class EventForm(forms.ModelForm):
-    class Meta:
-        model = Event
-        fields = ['event_description', 'event_picture']
+class RSVPForm(forms.Form):
+    pass
 
 class EventForm(forms.ModelForm):
     class Meta:
