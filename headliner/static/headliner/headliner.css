@@ -234,7 +234,11 @@ headliner.css */
     box-sizing: border-box;
 }
 
-.location-toggle {
-    width: 30px;
-    height: 30px;
+.px-1 {
+    width: 10px;
+}
+
+.location {
+    margin: 4px 2px;
+    padding: 5px;
 }
