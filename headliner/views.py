@@ -163,32 +163,39 @@ def get_photo(request, event_id):
 
 @login_required
 def event_action(request, event_id):
-
     context = {}
     event = get_object_or_404(Event, id=event_id)
     context['event'] = event
+    context['rsvp_name'] = 'RSVP'
     user = request.user
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = None
+        return render(request, 'headliner/event.html', context)
+    is_attending = profile.attending.filter(id=event.id).exists()
+
     if request.method == 'GET':
         rsvp_form = RSVPForm()
         context['form'] = rsvp_form
+        if not is_attending:  
+            pass  
+        else:   
+            context['rsvp_name'] = 'Un-RSVP'
         return render(request, 'headliner/event.html', context)
     
     rsvp_form = RSVPForm(request.POST)
     if not rsvp_form.is_valid():
         context = { 'form': rsvp_form, 'event':event }
         return render(request, 'headliner/event.html', context)
-    try:
-        profile = Profile.objects.get(user=user)
-    except Profile.DoesNotExist:
-        profile = None
-        return render(request, 'headliner/event.html', context)
     
-    is_attending = profile.attending.filter(id=event.id).exists()
-
     if not is_attending:    
         profile.attending.add(event)
-    
-    context = { 'form': rsvp_form, 'event':event }
+        context['rsvp_name'] = 'Un-RSVP'
+    else:   
+        profile.attending.remove(event)
+    context['form'] = rsvp_form
+    context['event'] = event
     return render(request, 'headliner/event.html', context)
 
 
@@ -254,6 +261,7 @@ def attending_action(request):
     user = request.user
     user_profile = get_object_or_404(Profile, user = user)
     events_attending = user_profile.attending.all()
+    print(events_attending)
     if request.method == 'GET':
         context = {'user': user, 'entries': events_attending}
         return render(request, 'headliner/attending.html', context)

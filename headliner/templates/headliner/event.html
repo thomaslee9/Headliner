@@ -22,7 +22,7 @@ event.html -->
         I'm going!
         <form action="{% url 'event' event.id%}" id="rsvp_form" method = "POST">
             {% csrf_token %}
-            <button class="button" id="rsvp_button">RSVP</button>
+            <button class="button" id="rsvp_button">{{ rsvp_name }}</button>
         </form>
     </div>
 {% endblock %}
