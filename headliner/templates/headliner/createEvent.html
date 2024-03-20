@@ -1,20 +1,34 @@
 <!-- 17-437 Team30
 Headliner App
 createEvent.html -->
-{% extends "headliner/base.html" %}
+{% extends "headliner/global.html" %}
 {% load static %}
 {% block content %}
-    <div class="content">
-        <form action="{% url 'create_event' %}" id="event_form" method = "POST" enctype="multipart/form-data">
-            <table>
-                {{form.as_table}}
-            </table>
-            {% csrf_token %}
-            <button id="id_post_button">Submit</button>
-        </form>
-        <div class="map" id="gmp-map"></div>
+    {% block page_header %}
+        <div class="container" id="page_name">
+            <h1 class="display-3 fw-bold text-white">Host an Event</h1>
+        </div>
+    {% endblock %}
+    <div class="text-white">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="{% url 'create_event' %}" id="event_form" method = "POST" enctype="multipart/form-data">
+                        <table>
+                            {{form.as_table}}
+                        </table>
+                        {% csrf_token %}
+                        <button id="id_post_button">Submit</button>
+                    </form>
+                </div>
+                <div class="col-md-8 align-self-end">
+                    <div class="map" id="gmp-map"></div>
+                </div>
+            </div>
+        </div>
     </div>
+
 {% endblock %}
-{% block script %}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc&libraries=places,marker&callback=initMap&solution_channel=GMP_QB_addressselection_v2_cABC" async defer></script>
-{% endblock %}
+    {% block script %}
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc&libraries=places,marker&callback=initMap&solution_channel=GMP_QB_addressselection_v2_cABC" async defer></script>
+    {% endblock %}
