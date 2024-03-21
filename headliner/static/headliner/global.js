@@ -69,7 +69,7 @@ function updateList(items, searchTerm, byLocation) {
 function makeEventElement(item) {
     // Build Event element
     let element = document.createElement('div');
-    element.className = 'event-div';
+    element.className = 'event-div rounded-4';
     element.id = 'id_event_div_' + item.id;
     let format = { hour: 'numeric', minute: 'numeric' };
     let date = new Date(item.creation_time);
@@ -77,52 +77,24 @@ function makeEventElement(item) {
     //  let localTimeString = date.toLocaleTimeString('en-US', format);
     let pictureElement = '';
     if (item.picture) {
-        pictureElement = `<img src="${item.picture}" alt="Event Picture" class="event-picture">`;
+        pictureElement = `<img src="${item.picture}" alt="Event Picture" class="card-img-top event-picture rounded-5 p-2">`;
     }
     element.innerHTML = `
-
-        <div class="image-container">
-            ${pictureElement}
+         <div class="post-container text-white">
+            <div class="title row">
+                <a href="/event/${item.id}" class="h2 fw-bold text-white link-underline link-underline-opacity-0" id="id_event_link_${item.id}">${item.title}</a>
+            </div>
+            <div class="image-container">
+                ${pictureElement}
+            </div>
+            <div class="title m-3">
+                <a href="${`/other_profile/${item.username}/`}" class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
+            </div>
+            <div class="title">
+                <span id="id_event_date_time_${item.id}" class="event-date">Posted on: ${localDateString } </span>
+            </div>
         </div>
-        <div class="post-container">
-            <a href="/event/${item.id}" class="event-text" id="id_event_link_${item.id}">${item.title}</a>
-            <br>
-            <a href="${`/other_profile/${item.username}/`}" class="event-name" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
-            <br>
-            <span id="id_event_text_${ item.id }" class="event-text">${item.text}</span>
-            <br>
-            <span id="id_event_date_time_${item.id}" class="event-date">Posted on: ${ localDateString } </span>
-            <div id=comments-for-event-${ item.id }></div>
-        </div>
     `;
-
-    // Build Tag Element for this Event post
-    let tagDiv = document.createElement('div');
-    tagDiv.className = 'tag-div';
-    tagDiv.id = 'id_tag_div_' + item.id;
-    tagDiv.innerHTML = `
-        <div> 🔥TRENDING🔥 </div>
-    `;
-    element.appendChild(tagDiv)
-
-    // Build Upvote / Downvote Element for this Event post
-    let voteDiv = document.createElement('div');
-    voteDiv.className = 'vote-div';
-    voteDiv.id = 'id_vote_div_' + item.id;
-    voteDiv.innerHTML = `
-        <div> Like: 👍  Dislike: 👎 </div>
-    `;
-    element.appendChild(voteDiv)
-
-    // Build Comment Element for this Event post
-    let commentDiv = document.createElement('div');
-    commentDiv.className = 'comment-div';
-    commentDiv.id = 'id_comment_div_' + item.id;
-    commentDiv.innerHTML = `
-        <div id="comments-for-event-${ item.id }"></div>
-        <div id="comment-div">Comments go here...</div>
-    `;
-    element.appendChild(commentDiv)
 
     return element
 }
@@ -130,15 +102,15 @@ function makeEventElement(item) {
 function fillInAddress(place) {
     const addressComponents = place.address_components || [];
     let formattedAddress = '';
-  
+
     // Concatenate all address components into a single string
     for (const component of addressComponents) {
       formattedAddress += component.long_name + ', ';
     }
-  
+
     // Remove trailing comma and space
     formattedAddress = formattedAddress.replace(/,\s*$/, '');
-  
+
     // Set the value of the input field to the formatted address
     document.getElementById('id_location').value = formattedAddress;
   }
