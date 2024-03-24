@@ -3,18 +3,30 @@ Headliner App
 login.html -->
 {% extends "headliner/base.html" %}
 {% load static %}
-{% block navbar %}{% endblock %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg justify-content-center fs-3">
+    <ul class="navbar-nav">
+        <div class="container-fluid"></div>
+        <li class="nav-item box rounded">
+            <a id="register_link" class="nav-link active fw-bold text-white" aria-current="page"
+                href="{% url 'register' %}">Register</a>
+        </li>
+    </ul>
+</nav>
+{% endblock %}
 {% block content %}
-    <header>
-        <a id="register_link" class="box" href="register"> Register </a>
-        <div id="page_name" class="box"> Login </div>
-    </header>
 
-    <form action="log-in" id="login-form" method="POST">
-        <table>
-            {{form.as_table}}
-        </table>
-        <button id="login_button" type="submit">Login</button>
-        {% csrf_token %}
-    </form>
+    <div class="container" id="page_name">
+        {% block page_header %} <h1 class="display-3 fw-bold text-white">Login</h1> {% endblock %}
+    </div>
+
+    <div class="login event-div rounded-4 text-white ">
+        <form action="log-in" method="POST">
+            <table>
+                {{form.as_table}}
+            </table>
+            <button id="login_button" type="submit">Login</button>
+            {% csrf_token %}
+        </form>
+    </div>
 {% endblock %}

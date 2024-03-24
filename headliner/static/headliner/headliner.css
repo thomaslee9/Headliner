@@ -85,14 +85,6 @@ headliner.css */
     justify-content: center;
 }
 
-
-.event-div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
 .image-container {
     margin-bottom: 10px;
 
@@ -110,6 +102,10 @@ headliner.css */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
+}
+
+.login {
+
 }
 
 #login-form {
@@ -140,6 +136,10 @@ headliner.css */
     color: lightblue;
 }
 
+.col {
+    outline: auto;
+}
+
 #event-form {
     background-color: darkblue;
     width: 270px;
@@ -158,7 +158,9 @@ headliner.css */
 
 
 .event-div {
-    background: linear-gradient(to bottom, rgba(0,0,0, .5) 80%, rgba(111, 109, 109, 0.473) 100%);    width: 310px;
+    background: linear-gradient(to bottom, rgba(0,0,0, .5) 80%, rgba(111, 109, 109, 0.473) 100%);
+    align-content: center;
+    width: 400px;
     /* background-color: rgba(0, 0, 0, .1) ; */
     border-width: 2px;
     border-style: solid;

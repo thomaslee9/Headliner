@@ -4,25 +4,48 @@ event.html -->
 {% extends "headliner/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="event-box" id="event-page">
-        {{event.title}} at {{event.location}} on {{event.date}}
-        <br>
-        Description:
-        <br>
-        {{event.event_description}}
-        <br>
-        Price: {{event.price}}
-        <br>
-        <img src="{{event.event_picture.url}}" alt="Event Picture" class="event-picture">
+<div class="container-fluid">
+<div class="row">
+    <div class="col">
+    <div class="event-div rounded-4 text-white" id="event-page">
+        <div class="post-container text-white">
+            <div class="title row">
+                <a href="/event/${item.id}" class="h2 fw-bold text-white link-underline link-underline-opacity-0"
+                    id="id_event_link_${item.id}">{{event.title}}</a>
+            </div>
+            <div class="image-container">
+                <img src="{{event.event_picture.url}}" alt="Event Picture" class="card-img-top event-picture rounded-5 p-2">
+            </div>
+            <div class="description">
+                Description:
+                <br>
+                {{event.event_description}}
+            </div>
+            <div class="price">
+                Price:
+                <br>
+                {{event.price}}
+            </div>
+            <div class="title m-3">
+                <a href="${`/other_profile/${item.username}/`}"
+                    class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0"
+                    id="id_event_profile_${item.id}">Event by {{event.created_by}}</a>
+            </div>
+            <div class="title">
+                <span id="id_event_date_time_${item.id}" class="event-date">Posted on: {{event.date}} </span>
+            </div>
+            <div class="title m-3">
+                <form action="{% url 'event' event.id%}" id="rsvo_form" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-danger text-white fw-bold link-underline link-underline-opacity-0" id="rsv_button">{{ rsvp_name }}</button>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <br>
-
-    <div class="box">
-        I'm going!
-        <form action="{% url 'event' event.id%}" id="rsvp_form" method = "POST">
-            {% csrf_token %}
-            <button class="button" id="rsvp_button">{{ rsvp_name }}</button>
-        </form>
+    </div>
+    <div class="col">
+        Chat Feature Here
+    </div>
+    </div>
     </div>
 {% endblock %}
