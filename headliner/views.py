@@ -31,7 +31,7 @@ def login_action(request):
         return redirect(reverse('global'))
     # Login to Headliner
     if request.method == 'GET':
-        context = {'status': "Log-in to Headliner"}
+        context = {'status': ""}
         context['form'] = LoginForm()
         return render(request, 'headliner/login.html', context)
     # Check Login Fields Exist
@@ -39,12 +39,12 @@ def login_action(request):
         context = {'status': "Username is Required"}
         context['form'] = LoginForm()
         return render(request, "headliner/login.html", context)
-    
+
     if "password" not in request.POST:
         context = {'status': "Password is Required"}
         context['form'] = LoginForm()
         return render(request, "headliner/login.html", context)
-    
+
     # Parse Login Form
     form = LoginForm(request.POST)
     status = "Log-in to Headliner"
@@ -53,9 +53,9 @@ def login_action(request):
         context = {'status': "Invalid Username or Password"}
         context['form'] = LoginForm(request.POST)
         return render(request, "headliner/login.html", context)
-    
+
     # Authenticate User
-    newUser = authenticate(username=form.cleaned_data['username'], 
+    newUser = authenticate(username=form.cleaned_data['username'],
                            password=form.cleaned_data['password'])
     status = "Successfully Logged In"
 
@@ -63,11 +63,11 @@ def login_action(request):
     login(request, newUser)
     context['form'] = form
     context['status'] = status
-    profile, created = Profile.objects.get_or_create(user=newUser) 
+    profile, created = Profile.objects.get_or_create(user=newUser)
     profile.save()
 
 
-    
+
     return redirect(reverse('global'))
 
 
@@ -75,41 +75,41 @@ def register_action(request):
     context = {}
     # Register to Headiner
     if request.method == 'GET':
-        context = {'status': "Social Network Registration"}
+        context = {'status': ""}
         context['form'] = RegisterForm()
         return render(request, "headliner/register.html", context)
-    
+
     # Check Register Fields Exist
     if "username" not in request.POST:
         context = {'status': "Username is Required"}
         context['form'] = RegisterForm()
         return render(request, "headliner/register.html", context)
-    
+
     if "password" not in request.POST:
         context = {'status': "Password is Required"}
         context['form'] = RegisterForm()
         return render(request, "headliner/register.html", context)
-    
+
     if "confirm_password" not in request.POST:
         context = {'status': "Correct Confirmation of Password is Required"}
         context['form'] = RegisterForm()
         return render(request, "headliner/register.html", context)
-    
+
     if "email" not in request.POST:
         context = {'status': "E-mail is Required"}
         context['form'] = RegisterForm()
         return render(request, "headliner/register.html", context)
-    
+
     if "first_name" not in request.POST:
         context = {'status': "First Name is Required"}
         context['form'] = RegisterForm()
         return render(request, "headliner/register.html", context)
-    
+
     if "last_name" not in request.POST:
         context = {'status': "Last Name is Required"}
         context['form'] = RegisterForm()
         return render(request, "headliner/register.html", context)
-    
+
     # Parse Register Form
     form = RegisterForm(request.POST)
     status = "Headliner Registration"
@@ -119,9 +119,9 @@ def register_action(request):
         context['form'] = RegisterForm()
         context['error'] = "Error: Registration Form is not Valid"
         return render(request, "headliner/register.html", context)
-    
+
     # Create New User Object
-    newUser = User.objects.create_user(username=form.cleaned_data['username'], 
+    newUser = User.objects.create_user(username=form.cleaned_data['username'],
                                         password=form.cleaned_data['password'],
                                         email=form.cleaned_data['email'],
                                         first_name=form.cleaned_data['first_name'],
@@ -130,14 +130,14 @@ def register_action(request):
 
     # Authenticate New User
     newUser = authenticate(username=form.cleaned_data['username'],
-                            password=form.cleaned_data['password'])    
-    
+                            password=form.cleaned_data['password'])
+
     # Login New User
     login(request, newUser)
 
     context['form'] = form
     context['status'] = status
-    profile, created = Profile.objects.get_or_create(user=newUser) 
+    profile, created = Profile.objects.get_or_create(user=newUser)
     profile.save()
 
     return redirect(reverse('global'))
@@ -157,7 +157,7 @@ def get_photo(request, event_id):
 
     if not event.event_picture:
         raise Http404
-    
+
     return HttpResponse(event.event_picture)
 
 
@@ -178,21 +178,21 @@ def event_action(request, event_id):
     if request.method == 'GET':
         rsvp_form = RSVPForm()
         context['form'] = rsvp_form
-        if not is_attending:  
-            pass  
-        else:   
+        if not is_attending:
+            pass
+        else:
             context['rsvp_name'] = 'Un-RSVP'
         return render(request, 'headliner/event.html', context)
-    
+
     rsvp_form = RSVPForm(request.POST)
     if not rsvp_form.is_valid():
         context = { 'form': rsvp_form, 'event':event }
         return render(request, 'headliner/event.html', context)
-    
-    if not is_attending:    
+
+    if not is_attending:
         profile.attending.add(event)
         context['rsvp_name'] = 'Un-RSVP'
-    else:   
+    else:
         profile.attending.remove(event)
     context['form'] = rsvp_form
     context['event'] = event
@@ -265,7 +265,7 @@ def attending_action(request):
     if request.method == 'GET':
         context = {'user': user, 'entries': events_attending}
         return render(request, 'headliner/attending.html', context)
-    context = {'user': user, 'entries': events_attending}  
+    context = {'user': user, 'entries': events_attending}
     return render(request, 'socialnetwork/attending.html', context)
 
 @login_required
@@ -275,7 +275,7 @@ def create_event_action(request):
     if request.method == 'GET':
         context['form'] = EventForm()
         return render(request, 'headliner/createEvent.html', context)
-    
+
 
     entry = Event()
     entry.created_by=request.user
@@ -288,7 +288,7 @@ def create_event_action(request):
     if not event_form.is_valid():
         context = { 'form': event_form, 'user':user }
         return render(request, 'headliner/createEvent.html', context)
-    
+
     entry.event_description = event_form.cleaned_data['event_description']
     entry.title = event_form.cleaned_data['title']
     entry.location = event_form.cleaned_data['location']
@@ -299,7 +299,7 @@ def create_event_action(request):
 
     context = { 'user': user, 'form': EventForm(), 'status': entry.title + " event has been posted!!" }
     return render(request, 'headliner/createEvent.html', context)
-    
+
 
 
 def get_global(request):
