@@ -27,7 +27,7 @@ event.html -->
                 {{event.price}}
             </div>
             <div class="title m-3">
-                <a href="${`/other_profile/${item.username}/`}"
+                <a href="{% url 'otherprofile' event.id %}"
                     class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0"
                     id="id_event_profile_${item.id}">Event by {{event.created_by}}</a>
             </div>
