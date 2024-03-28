@@ -1,6 +1,7 @@
 <!-- 17-437 Team30
 Headliner App
 otherprofile.html -->
+
 {% extends "headliner/base.html" %}
 {% load static %}
 {% block head_script %}
@@ -14,4 +15,18 @@ otherprofile.html -->
     Other Profile Page
 </div>
 
+{% if profile.prof_picture %}
+    <img id="profile_picture" src="{% url 'pfp' profile.id %}" style="height:150px; width:150px;" class="pfp">
+    <br>
+{% else %}
+    <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture"
+    style="height:150px; width:150px;" class="pfp">
+    <br>
+{% endif %}
+
+<div id="user_bio">
+    {{ profile.bio }}
+</div>
+
+<br>
 {% endblock %}

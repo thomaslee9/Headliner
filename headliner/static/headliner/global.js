@@ -1,3 +1,7 @@
+// 17-437 Team30
+// Headliner App
+// global.js
+
 "use strict";
 
 const CONFIGURATION = {
@@ -88,7 +92,7 @@ function makeEventElement(item) {
                 ${pictureElement}
             </div>
             <div class="title m-3">
-                <a href="${`/other_profile/${item.username}/`}" class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
+                <a href="/otherprofile/${item.userID}" class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
             </div>
             <div class="title">
                 <span id="id_event_date_time_${item.id}" class="event-date">Posted on: ${localDateString } </span>

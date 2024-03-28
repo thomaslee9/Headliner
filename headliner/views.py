@@ -177,6 +177,7 @@ def event_action(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     context['event'] = event
     context['rsvp_name'] = 'RSVP'
+    context['userID'] = request.user.id
     user = request.user
     try:
         profile = Profile.objects.get(user=user)
