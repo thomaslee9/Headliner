@@ -1,0 +1,42 @@
+<!-- 17-437 Team30
+Headliner App
+myprofile.html -->
+{% extends "headliner/base.html" %}
+{% load static %}
+{% block head_script %}
+
+    <script src="{% static 'headliner/global.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box text-white">
+    My Profile Page
+</div>
+
+{% if request.user.profile.prof_picture %}
+    <img id="profile_picture" src="{% url 'photo' request.user.id %}" style="height:150px; width:150px;" class="pfp">
+    <br>
+{% else %}
+    <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture"
+    style="height:150px; width:150px;" class="pfp">
+    <br>
+{% endif %}
+
+<br>
+
+<form enctype="multipart/form-data" action="myprofile" id="myprofile_form" class="web_form" method="POST"> 
+
+    <div class="nav-item box rounded">
+        Edit profile:
+    </div>
+
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <button id="update_profile_button" type="submit"> Submit </button>
+
+    {% csrf_token %}
+
+</form>
+{% endblock %}

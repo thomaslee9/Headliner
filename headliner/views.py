@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.http import HttpResponse, Http404
 
 from headliner.forms import LoginForm
-from headliner.forms import RegisterForm, RSVPForm
+from headliner.forms import RegisterForm, RSVPForm, MyProfileForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -199,6 +199,41 @@ def event_action(request, event_id):
     return render(request, 'headliner/event.html', context)
 
 
+@login_required
+def myprofile_action(request):
+    context = {}
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    if request.method == 'GET':
+        context = {
+            'form': MyProfileForm(initial={'bio': request.user.profile.bio})
+        }
+        return render(request, 'headliner/myprofile.html', context)
+    
+    form = MyProfileForm(request.POST, request.FILES)
+
+    if not form.is_valid():
+        context['form'] = form
+        return render(request, 'headliner/myprofile.html', context)
+    
+    profile.bio = form.cleaned_data['bio']
+    profile.prof_picture = form.cleaned_data['prof_picture']
+    profile.content_type = form.cleaned_data['prof_picture'].content_type
+    profile.save()
+
+    context['status'] = "Your Profile has been Updated Successfully."
+
+    context['form'] = MyProfileForm(initial={'bio': request.user.profile.bio})
+
+    return render(request, 'headliner/myprofile.html', context)
+
+
+@login_required
+def otherprofile_action(request, user_id):
+    context = {}
+    profile = get_object_or_404(Profile, id=user_id)
+    context['profile'] = profile
+    return render(request, 'headliner/otherprofile.html', context)
 
 
 @login_required
