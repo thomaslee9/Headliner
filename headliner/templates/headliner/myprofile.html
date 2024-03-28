@@ -14,7 +14,7 @@ myprofile.html -->
 </div>
 
 {% if request.user.profile.prof_picture %}
-    <img id="profile_picture" src="{% url 'photo' request.user.id %}" style="height:150px; width:150px;" class="pfp">
+    <img id="profile_picture" src="{% url 'pfp' request.user.id %}" style="height:150px; width:150px;" class="pfp">
     <br>
 {% else %}
     <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture"

@@ -17,5 +17,6 @@ urlpatterns = [
     path('otherprofile/<int:user_id>', views.otherprofile_action, name="otherprofile"),
 
     path('event/<int:event_id>/', views.event_action, name="event"),
-    path('photo/<int:event_id>/', views.get_photo, name="photo")
+    path('photo/<int:event_id>/', views.get_photo, name="photo"),
+    path('pfp/<int:user_id>/', views.get_pfp, name="pfp")
 ]
