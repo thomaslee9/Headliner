@@ -162,6 +162,16 @@ def get_photo(request, event_id):
 
 
 @login_required
+def get_pfp(request, user_id):
+    profile = get_object_or_404(Profile, id=user_id)
+
+    if not profile.prof_picture:
+        raise Http404
+
+    return HttpResponse(profile.prof_picture)
+
+
+@login_required
 def event_action(request, event_id):
     context = {}
     event = get_object_or_404(Event, id=event_id)
