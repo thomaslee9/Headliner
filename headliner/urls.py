@@ -13,6 +13,9 @@ urlpatterns = [
     path('global/', views.global_action, name="global"),
     path('attending/', views.attending_action, name="attending"),
 
+    path('myprofile', views.myprofile_action, name="myprofile"),
+    path('otherprofile/<int:user_id>', views.otherprofile_action, name="otherprofile"),
+
     path('event/<int:event_id>/', views.event_action, name="event"),
     path('photo/<int:event_id>/', views.get_photo, name="photo")
 ]

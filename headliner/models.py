@@ -32,6 +32,8 @@ class Profile(models.Model):
     prof_picture = models.ImageField(null=True, blank=True, verbose_name='Add a Photo')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
+    content_type = models.CharField(blank=True, max_length=50)
+
     attending = models.ManyToManyField(Event, related_name='attending')
     my_events = models.ManyToManyField(Event, related_name='my_events')
 

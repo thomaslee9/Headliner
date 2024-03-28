@@ -30,6 +30,9 @@ login.html -->
       <ul class="navbar-nav">
         <div class="container-fluid"></div>
         <li class="nav-item box rounded">
+          <a id="myprofile_link" class="nav-link active fw-bold text-white" aria-current="page" href="{% url 'myprofile' %}">{{user.first_name}} {{user.last_name}}</a>
+        </li>
+        <li class="nav-item box rounded">
           <a id="logout_link" class="nav-link active fw-bold text-white" aria-current="page" href="{% url 'logout' %}">Logout</a>
         </li>
         <li class="nav-item box rounded">

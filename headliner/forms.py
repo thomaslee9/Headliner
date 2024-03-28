@@ -9,8 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-from headliner.models import Event
+from headliner.models import Event, Profile
 
+MAX_UPLOAD_SIZE = 2500000
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="Username", required=True, max_length=20)
@@ -78,4 +79,28 @@ class EventForm(forms.ModelForm):
             'price': 'Price',
             'date': 'Date'
         }
+
+
+class MyProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio', 'prof_picture')
+        widgets = {
+            'bio': forms.Textarea(attrs={'id':'bio_input_text', 'rows': 3}),
+            'prof_picture': forms.FileInput(attrs={'id':'profile_picture'})
+        }
+        labels = {
+            'bio': "Bio",
+            'prof_picture': "Upload Image"
+        }
+
+    def clean_picture(self):
+        picture = self.cleaned_data['prof_picture']
+        if not picture or not hasattr(picture, 'content_type'):
+            raise forms.ValidationError('You must upload a picture.')
+        if not picture.content_type or not picture.content_type.startswith('image'):
+            raise forms.ValidationError('File type is not a compatible image.')
+        if picture.size > MAX_UPLOAD_SIZE:
+            raise forms.ValidationError('File too big (max size is {0} bytes).'.format(MAX_UPLOAD_SIZE))
+        return picture
         
