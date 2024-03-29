@@ -17,21 +17,21 @@ login.html -->
 </head>
 
 <body class="body">
-  <div class="position-absolute top-0 end-0">
-    <button class='btn btn-default'>
-      Profile
-    </button>
+  <div class="position-absolute top-0 end-0 p-0 m-0">
+      <a href="{% url 'myprofile' %}">
+        <img src="{% static 'images/prof_icon.png' %}" class="pfp">
+      </a>
   </div>
-  <div class="title">
+  <div class="title m-3">
     <h1 class="display-2 fw-bold text-white">HEADLINER</h1>
   </div>
   {% block navbar %}
     <nav class="navbar navbar-expand-lg justify-content-center fs-3">
       <ul class="navbar-nav">
         <div class="container-fluid"></div>
-        <li class="nav-item box rounded">
+        <!-- <li class="nav-item box rounded">
           <a id="myprofile_link" class="nav-link active fw-bold text-white" aria-current="page" href="{% url 'myprofile' %}">{{user.first_name}} {{user.last_name}}</a>
-        </li>
+        </li> -->
         <li class="nav-item box rounded">
           <a id="logout_link" class="nav-link active fw-bold text-white" aria-current="page" href="{% url 'logout' %}">Logout</a>
         </li>

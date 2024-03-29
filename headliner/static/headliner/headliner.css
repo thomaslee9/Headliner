@@ -18,7 +18,10 @@ headliner.css */
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+}
+
+input.search-query {
+    background: linear-gradient(to bottom, #310E68 1%, #5F0F40 20.7%);
 }
 
 .title {
@@ -26,19 +29,7 @@ headliner.css */
 }
 
 .box {
-    /* background-color: orangered; */
-    /* opacity: 0.5; */
-    /* width: 200px; */
-    /* border-width: 2px; */
-    /* border-style: solid; */
-    /* border-color: darkblue; */
     margin: 8px;
-    /* font-family: Helvetica; */
-
-    /* font-size: 30px; */
-    /* font-weight: bold; */
-    /* color: darkblue; */
-    /* text-decoration: none; */
 }
 
 .event-box {
@@ -56,12 +47,6 @@ headliner.css */
     text-decoration: none;
 }
 
-/* .button {
-    background-color: cadetblue;
-    font-size: 20px;
-    font-weight: bold;
-    color: darkblue;
-} */
 
 #register_link {
     font-size: 26px;
@@ -77,6 +62,13 @@ headliner.css */
 
 .center-form {
     text-align: center;
+}
+
+.pfp {
+    margin: 0;
+    padding: 0;
+    height: 125px;
+    width: 125px;
 }
 
 .center-posts {
@@ -228,7 +220,7 @@ headliner.css */
     position: relative;
     align-content: flex-start;
     width: 300px; /* Adjust width as needed */
-    margin: 20px auto; /* Center the search bar */
+    margin: auto; /* Center the search bar */
 }
 
 #search-input {

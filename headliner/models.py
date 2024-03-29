@@ -29,7 +29,7 @@ class EventGroup(models.Model):
         return f"EventGroup(id={self.id})"
 
 class Profile(models.Model):
-    prof_picture = models.ImageField(null=True, blank=True, verbose_name='Add a Photo')
+    prof_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True, verbose_name='Add a Photo')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
     content_type = models.CharField(blank=True, max_length=50)
@@ -49,4 +49,3 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Profile(id={self.id})"
-
