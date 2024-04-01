@@ -220,13 +220,13 @@ def myprofile_action(request):
             'form': MyProfileForm(initial={'bio': request.user.profile.bio})
         }
         return render(request, 'headliner/myprofile.html', context)
-    
+
     form = MyProfileForm(request.POST, request.FILES)
 
     if not form.is_valid():
         context['form'] = form
         return render(request, 'headliner/myprofile.html', context)
-    
+
     profile.bio = form.cleaned_data['bio']
     profile.prof_picture = form.cleaned_data['prof_picture']
     profile.content_type = form.cleaned_data['prof_picture'].content_type
@@ -298,6 +298,7 @@ def get_attending(request):
         if event_item.event_picture:
             event_data['picture'] = event_item.event_picture.url
         response_data['events'].append(event_data)
+    response_data['user_id'] = user_profile.id
 
     response_json = json.dumps(response_data)
     return HttpResponse(response_json, content_type='application/json')
@@ -368,6 +369,7 @@ def get_global(request):
         if event_item.event_picture:
             event_data['picture'] = event_item.event_picture.url
         response_data['events'].append(event_data)
+    response_data['user_id'] = request.user.id
 
     response_json = json.dumps(response_data)
     return HttpResponse(response_json, content_type='application/json')

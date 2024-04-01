@@ -55,7 +55,7 @@ function displayError(message) {
 function updateList(items, searchTerm, byLocation) {
     let list = document.getElementById("events-container");
     list.innerHTML = ''; // Clear previous events
-
+    // items.u
     let filteredEvents = items.events.filter(event => {
         if (byLocation) {
             return event.location.toLowerCase().includes(searchTerm);
@@ -65,12 +65,12 @@ function updateList(items, searchTerm, byLocation) {
     });
 
     for (let event of filteredEvents) {
-        list.prepend(makeEventElement(event));
+        list.prepend(makeEventElement(event, items.user_id));
     }
 }
 
 //makes the post element
-function makeEventElement(item) {
+function makeEventElement(item, userID) {
     // Build Event element
     let element = document.createElement('div');
     element.className = 'event-div rounded-4';
@@ -80,8 +80,16 @@ function makeEventElement(item) {
     let localDateString = date.toLocaleDateString();
     //  let localTimeString = date.toLocaleTimeString('en-US', format);
     let pictureElement = '';
+    let profileElement = '';
     if (item.picture) {
         pictureElement = `<img src="${item.picture}" alt="Event Picture" class="card-img-top event-picture rounded-5 p-2">`;
+    }
+    console.log(item.userID, userID)
+    if (item.userID == userID) {
+
+        profileElement = `<a href="/editevent/${item.id}" class="btn btn-danger text-white fw-bold link-underline link-underline-opacity-0">Edit Event</a>`;
+    } else {
+        profileElement = `<a href="/otherprofile/${item.userID}" class="btn btn-dark text-white fw-bold link-underline link-underline-opacity-0">Event by ${item.first_name} ${item.last_name}</a>`;
     }
     element.innerHTML = `
          <div class="post-container text-white">
@@ -92,7 +100,7 @@ function makeEventElement(item) {
                 ${pictureElement}
             </div>
             <div class="title m-3">
-                <a href="/otherprofile/${item.userID}" class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0" id="id_event_profile_${item.id}">Event by ${item.first_name} ${item.last_name}</a>
+                ${profileElement}
             </div>
             <div class="title">
                 <span id="id_event_date_time_${item.id}" class="event-date">Posted on: ${localDateString } </span>

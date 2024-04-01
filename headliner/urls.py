@@ -18,5 +18,6 @@ urlpatterns = [
 
     path('event/<int:event_id>/', views.event_action, name="event"),
     path('photo/<int:event_id>/', views.get_photo, name="photo"),
-    path('pfp/<int:user_id>/', views.get_pfp, name="pfp")
+    path('pfp/<int:user_id>/', views.get_pfp, name="pfp"),
+    path('editevent/<int:event_id>/', views.event_action, name="editevent"),
 ]
