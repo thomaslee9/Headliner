@@ -52,6 +52,7 @@ function displayError(message) {
     let errorElement = document.getElementById("error")
     errorElement.innerHTML = message
 }
+
 function updateList(items, searchTerm, byLocation) {
     let list = document.getElementById("events-container");
     list.innerHTML = ''; // Clear previous events
@@ -174,4 +175,94 @@ function getCSRFToken() {
         }
     }
     return "unknown"
+}
+
+
+function loadMessages() {
+    let xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function() {
+        if (this.readyState !== 4) return
+        updateEventPage(xhr)
+    }
+
+    xhr.open("GET", "/headliner/get-event", true)
+    xhr.send()
+}
+
+
+function updateEventPage(xhr) {
+    if (xhr.status === 200) {
+        let response = JSON.parse(xhr.responseText)
+        updateMessages(response)
+        return
+    }
+
+    if (xhr.status === 0) {
+        displayError("Cannot connect to server")
+        return
+    }
+
+    if (!xhr.getResponseHeader('content-type') === 'application/json') {
+        displayError(`Received status = ${xhr.status}`)
+        return
+    }
+
+    let response = JSON.parse(xhr.responseText)
+    if (response.hasOwnProperty('error')) {
+        displayError(response.error)
+        return
+    }
+
+    displayError(response)
+}
+
+
+function updateMessages(data) {
+    let msgList = document.getElementById("message-list")
+    let msgIdBase = "id_message_div_"
+
+    if (!data.hasOwnProperty('allMessages')) return
+
+    data['allMessages'].forEach((currMsg) => {
+        if (!document.getElementById(msgIdBase + currMsg.id)) {
+            let msgBlock = document.createElement("div")
+            msgBlock.append(makeMessageHTML(currMsg))
+            msgList.append(msgBlock)
+        }
+    })
+}
+
+
+function addMessage(eventID) {
+    let newMessageElement = document.getElementById("id_message_input_text")
+    let newMessageText = newMessageElement.value
+
+    newMessageElement.value = ''
+    displayError('')
+
+    let xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState !== 4) return
+        updateMessages(xhr)
+    }
+
+    xhr.open("POST", addChatURL, true)
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    xhr.send(`message_text=${newMessageText}&csrfmiddlewaretoken=${getCSRFToken()}&event_id=${eventID}`)
+}
+
+
+function makeMessageHTML(msg) {
+    let newMsg = document.createElement("div")
+    newMsg.id = "id_message_div_" + msg.id
+    newMsg.className = "message"
+
+    newMsg.innerHTML = `
+        <a href="/otherprofile/${msg.created_by}" id="id_msg_profile_${msg.id}"> Sent by ${msg.username}:</a>
+        <p id="id_msg_text_${msg.id}" class="message"> ${sanitize(msg.text)} </p>
+        <p id="id_msg_date_time_${msg.id}"> ${msg.creation_time} </p>
+        <br>
+    `
+
+    return newMsg
 }

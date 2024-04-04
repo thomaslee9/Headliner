@@ -54,6 +54,32 @@ event.html -->
     </div>
     <div class="col">
         Chat Feature Here
+
+        <!-- AJAX LOAD CHAT MESSAGES -->
+
+        <div id="message-list"> </div>
+        <br>
+
+        <script>
+            const addChatURL = "{% url 'ajax-add-message' %}"
+            const eventId = "{{event.id}}"
+
+            window.onload = loadMessages;
+            // window.setInterval(loadMessages, 1000);
+        </script>
+
+        <!-- AJAX SEND NEW CHAT FORM -->
+
+        <div class="title m-3"> SEND NEW CHAT HERE </div>
+        <div>
+            <label for="id_message_input_text" class="btn btn-dark text-white fw-bold link-underline link-underline-opacity-0">New Message:</label>
+            <input id="id_message_input_text" type="text" name="newChat">
+            <button id="id_message_button" onclick="addMessage(eventId)">Send</button>
+            <br>
+            <span id="error" class="error"></span>
+            {% csrf_token %}
+        </div>
+
     </div>
     </div>
     </div>
