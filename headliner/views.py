@@ -455,7 +455,7 @@ def get_event(request):
             'creation_time': model_item.creation_time,
             'event_id': model_item.event.id,
         }
-        response_data['allPosts'].append(my_item)
+        response_data['allMessages'].append(my_item)
 
     response_json = json.dumps(response_data)
 
