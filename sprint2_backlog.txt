@@ -1,17 +1,19 @@
-Sprint Two Backlog
+17-427 Team30
+Sprint #1 Backlog
+
 Carter
-Designed layout and U/I functionality for Discover and Event Pages
-Integrated Bootstrap to customize css style and structure
-Did full CSS styling for Discover, Event, Profile, and Login pages.
+- Designed layout and U/I functionality for Discover and Event Pages
+- Integrated Bootstrap to customize css style and structure
+- Did full CSS styling for Discover, Event, Profile, and Login pages.
 Ishan
-Added the attending page and formatting for the attending page. Included RSVP implementation for the event page to ensure user attendance.
-Worked on messaging implementation and built the Message and ChatGroup model that will be used in the chat feature implementation. 
- Implemented chat.js script that will be run for our real-time messaging feature. 
+- Added the attending page and formatting for the attending page. Included RSVP implementation for the event page to ensure user attendance.
+- Worked on messaging implementation and built the Message and ChatGroup model that will be used in the chat feature implementation. 
+- Implemented chat.js script that will be run for our real-time messaging feature. 
 Bhavya
-Integrated Google maps api to add location functionality for selecting location for event creation and searching events by location 
-Updated the create events page 
-Visualizations of updated UI
+- Integrated Google maps api to add location functionality for selecting location for event creation and searching events by location 
+- Updated the create events page 
+- Visualizations of updated UI
 Thomas
-Added viewing User Profile pages and integrated functionality to update User’s own Profile with a Bio and Profile Picture
-Added global Group Chat on Event pages and enabled Users to send text chat messages labeled with their username
-Refactored main Javascript backend Ajax functions to simultaneously load Events and Messages without conflicts 
+- Added viewing User Profile pages and integrated functionality to update User’s own Profile with a Bio and Profile Picture
+- Added global Group Chat on Event pages and enabled Users to send text chat messages labeled with their username
+- Refactored main Javascript backend Ajax functions to simultaneously load Events and Messages without conflicts 
