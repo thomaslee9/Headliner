@@ -20,4 +20,7 @@ urlpatterns = [
     path('photo/<int:event_id>/', views.get_photo, name="photo"),
     path('pfp/<int:user_id>/', views.get_pfp, name="pfp"),
     path('editevent/<int:event_id>/', views.event_action, name="editevent"),
+
+    path('headliner/add-message', views.add_message, name='ajax-add-message'),
+    path('headliner/get-event', views.get_event, name='ajax-get-event'),
 ]

@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-from headliner.models import Event, Profile
+from headliner.models import Event, Profile, Message
 from django.utils import timezone
 from headliner.forms import EventForm
 from django.http import HttpResponse
@@ -378,3 +378,85 @@ def _my_json_error_response(message, status=200):
     # You can create your JSON by constructing the string representation yourself (or just use json.dumps)
     response_json = '{"error": "' + message + '"}'
     return HttpResponse(response_json, content_type='application/json', status=status)
+
+
+def add_message(request):
+    if not request.user.is_authenticated:
+        return _my_json_error_response("You must be logged in to do this operation", status=401)
+
+    if request.method != 'POST':
+        return _my_json_error_response("You must use a POST request for this operation", status=405)
+
+    if not 'message_text' in request.POST or not request.POST['comment_text']:
+        return _my_json_error_response("You must enter a Chat Message to add.", status=400)
+    
+    if not 'event_id' in request.POST or not request.POST['event_id'] or not request.POST['event_id'].isdigit():
+        return _my_json_error_response("Comment must be added to an Event.", status=400)
+    
+    try: 
+        event_id = int(request.POST['event_id'])
+    except:
+        return _my_json_error_response("Comment must be added to an Event (with int event_id).", status=400)
+    
+    # Build Message
+    new_chat = Message()
+    new_chat.created_by = request.user
+
+    timeString = timezone.localtime()
+    new_chat.creation_time = str(timeString.strftime('%-m/%-d/%Y %-I:%M %p'))
+
+    new_chat.text = request.POST['message_text']
+
+    try:
+        new_chat.event = Event.objects.get(id=event_id)
+    except:
+        return _my_json_error_response("Comment needs an existing Event.", status=400)
+    
+    new_chat.save()
+
+    return get_new_chat(request)
+
+
+def get_new_chat(request):
+    response_data = []
+
+    newChat = Message.objects.all().last()
+
+    if newChat:
+        item = {
+            'id': newChat.id,
+            'text': newChat.text,
+            'created_by': newChat.created_by.id,
+            'username': newChat.created_by.username,
+            'creation_time': newChat.creation_time,
+            'event_id': newChat.event.id,
+        }
+        response_data.append(item)
+
+    response_json = json.dumps(response_data)
+
+    return HttpResponse(response_json, content_type='application/json')
+
+
+def get_event(request):
+    if not request.user.is_authenticated:
+        return _my_json_error_response("You must be logged in to do this operation", status=401)
+    
+    response_data = {}
+    response_data['allMessages'] = []
+
+    # Collect all Messages
+    for model_item in Message.objects.all():
+        my_item = {
+            'id': model_item.id,
+            'text': model_item.text,
+            'created_by': model_item.created_by.id,
+            'username': model_item.created_by.username,
+            'creation_time': model_item.creation_time,
+            'event_id': model_item.event.id,
+        }
+        response_data['allPosts'].append(my_item)
+
+    response_json = json.dumps(response_data)
+
+    return HttpResponse(response_json, content_type='application/json')

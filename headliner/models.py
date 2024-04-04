@@ -46,6 +46,8 @@ class Message(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="post_creators")
     text = models.TextField(blank=True)
     image = models.ImageField(null=True, blank=True, verbose_name='Add a Photo')
+    event = models.ForeignKey(Event, default=None, on_delete=models.PROTECT)
+
 
     def __str__(self):
         return f"Profile(id={self.id})"
