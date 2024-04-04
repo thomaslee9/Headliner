@@ -259,8 +259,8 @@ function makeMessageHTML(msg) {
 
     newMsg.innerHTML = `
         <a href="/otherprofile/${msg.created_by}" id="id_msg_profile_${msg.id}"> Sent by ${msg.username}:</a>
-        <p id="id_msg_text_${msg.id}" class="message"> ${sanitize(msg.text)} </p>
-        <p id="id_msg_date_time_${msg.id}"> ${msg.creation_time} </p>
+        <p id="id_msg_text_${msg.id}" class="text-white"> ${sanitize(msg.text)} </p>
+        <p id="id_msg_date_time_${msg.id}" class="text-white"> ${msg.creation_time} </p>
         <br>
     `
 
