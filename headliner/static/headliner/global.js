@@ -266,3 +266,12 @@ function makeMessageHTML(msg) {
 
     return newMsg
 }
+
+
+function sanitize(s) {
+    // Be sure to replace ampersand first
+    return s.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+}
