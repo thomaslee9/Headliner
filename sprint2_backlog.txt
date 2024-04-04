@@ -4,7 +4,7 @@ Sprint #1 Backlog
 Carter
 - Designed layout and U/I functionality for Discover and Event Pages
 - Integrated Bootstrap to customize css style and structure
-- Did full CSS styling for Discover, Event, Profile, and Login pages.
+- Did full CSS styling for Discover, Event, and Login pages.
 Ishan
 - Added the attending page and formatting for the attending page. Included RSVP implementation for the event page to ensure user attendance.
 - Worked on messaging implementation and built the Message and ChatGroup model that will be used in the chat feature implementation. 
