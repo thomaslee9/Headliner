@@ -42,7 +42,7 @@ class Profile(models.Model):
 
 
 class Message(models.Model):
-    creation_time = models.DateTimeField(auto_now_add=True)
+    creation_time = models.CharField(max_length=300)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="post_creators")
     text = models.TextField(blank=True)
     image = models.ImageField(null=True, blank=True, verbose_name='Add a Photo')

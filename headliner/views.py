@@ -387,7 +387,7 @@ def add_message(request):
     if request.method != 'POST':
         return _my_json_error_response("You must use a POST request for this operation", status=405)
 
-    if not 'message_text' in request.POST or not request.POST['comment_text']:
+    if not 'message_text' in request.POST or not request.POST['message_text']:
         return _my_json_error_response("You must enter a Chat Message to add.", status=400)
     
     if not 'event_id' in request.POST or not request.POST['event_id'] or not request.POST['event_id'].isdigit():
