@@ -67,6 +67,10 @@ class RegisterForm(forms.Form):
 class RSVPForm(forms.Form):
     pass
 
+class CreateGroupForm(forms.Form):
+    name = forms.CharField(label='Group Name', required=True, max_length=20)
+
+
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event

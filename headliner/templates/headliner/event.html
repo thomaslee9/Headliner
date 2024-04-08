@@ -53,8 +53,18 @@ event.html -->
     </div>
     </div>
     <div class="col">
-        Chat Feature Here
-
+        <form method="post">
+            {% csrf_token %}
+            {{ createGroup_form.as_p }}
+            <button type="submit" name="create_group_button">Create Group</button>
+        </form>
+        <div id="chat-groups-container">
+            {% for group in chat_groups %}
+                <div class="group">
+                    <a href="#" class="group-link" data-group-id="{{ group.id }}">{{ group.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
         <!-- AJAX LOAD CHAT MESSAGES -->
 
         <div id="message-list"> </div>
@@ -63,9 +73,26 @@ event.html -->
         <script>
             const addChatURL = "{% url 'ajax-add-message' %}"
             const eventId = "{{event.id}}"
+            var groupId = "1"
 
-            window.onload = loadMessages;
-            window.setInterval(loadMessages, 1000);
+            document.addEventListener('DOMContentLoaded', function() {
+                const groupLinks = document.querySelectorAll('.group-link');
+                groupLinks.forEach(function(link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault(); 
+                        groupId = this.getAttribute('data-group-id');
+                        loadMessages(eventId, groupId); 
+                    });
+                });
+            });
+
+            window.onload = function() {
+                function updateMessages() {
+                    loadMessages(eventId, groupId);
+                    setTimeout(updateMessages, 500);
+                }
+                updateMessages();
+            };
         </script>
 
         <!-- AJAX SEND NEW CHAT FORM -->
@@ -74,7 +101,7 @@ event.html -->
         <div>
             <label for="id_message_input_text" class="btn btn-dark text-white fw-bold link-underline link-underline-opacity-0">New Message:</label>
             <input id="id_message_input_text" type="text" name="newChat">
-            <button id="id_message_button" onclick="addMessage(eventId)">Send</button>
+            <button id="id_message_button" onclick="addMessage(eventId, groupId)">Send</button>
             <br>
             <span id="error" class="error"></span>
             {% csrf_token %}

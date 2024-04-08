@@ -85,7 +85,6 @@ function makeEventElement(item, userID) {
     if (item.picture) {
         pictureElement = `<img src="${item.picture}" alt="Event Picture" class="card-img-top event-picture rounded-5 p-2">`;
     }
-    console.log(item.userID, userID)
     if (item.userID == userID) {
 
         profileElement = `<a href="/editevent/${item.id}" class="btn btn-danger text-white fw-bold link-underline link-underline-opacity-0">Edit Event</a>`;
@@ -178,22 +177,22 @@ function getCSRFToken() {
 }
 
 
-function loadMessages() {
+function loadMessages(event_id, chat_id) {
     let xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function() {
         if (this.readyState !== 4) return
-        updateEventPage(xhr)
+        updateEventPage(xhr, chat_id)
     }
 
-    xhr.open("GET", "/headliner/get-event", true)
+    xhr.open("GET", "/headliner/get-event/" + event_id + "/", true);
     xhr.send()
 }
 
 
-function updateEventPage(xhr) {
+function updateEventPage(xhr, chat_id) {
     if (xhr.status === 200) {
         let response = JSON.parse(xhr.responseText)
-        updateMessages(response)
+        updateMessages(response, chat_id)
         return
     }
 
@@ -217,13 +216,14 @@ function updateEventPage(xhr) {
 }
 
 
-function updateMessages(data) {
+function updateMessages(data, chat_id) {
     let msgList = document.getElementById("message-list")
     let msgIdBase = "id_message_div_"
+    msgList.innerHTML = ''
 
-    if (!data.hasOwnProperty('allMessages')) return
+    if (Object.keys(data).length === 0) return
 
-    data['allMessages'].forEach((currMsg) => {
+    data[chat_id].forEach((currMsg) => {
         if (!document.getElementById(msgIdBase + currMsg.id)) {
             let msgBlock = document.createElement("div")
             msgBlock.append(makeMessageHTML(currMsg))
@@ -233,7 +233,7 @@ function updateMessages(data) {
 }
 
 
-function addMessage(eventID) {
+function addMessage(eventID, chatID) {
     let newMessageElement = document.getElementById("id_message_input_text")
     let newMessageText = newMessageElement.value
 
@@ -243,12 +243,11 @@ function addMessage(eventID) {
     let xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function() {
         if (xhr.readyState !== 4) return
-        updateMessages(xhr)
+        updateMessages(xhr, chatID)
     }
-
     xhr.open("POST", addChatURL, true)
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    xhr.send(`message_text=${newMessageText}&csrfmiddlewaretoken=${getCSRFToken()}&event_id=${eventID}`)
+    xhr.send(`message_text=${newMessageText}&csrfmiddlewaretoken=${getCSRFToken()}&event_id=${eventID}&chat_id=${chatID}`)
 }
 
 
@@ -263,7 +262,7 @@ function makeMessageHTML(msg) {
         <p id="id_msg_date_time_${msg.id}" class="text-white"> ${msg.creation_time} </p>
         <br>
     `
-
+    
     return newMsg
 }
 

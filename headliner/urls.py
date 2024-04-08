@@ -17,10 +17,12 @@ urlpatterns = [
     path('otherprofile/<int:user_id>', views.otherprofile_action, name="otherprofile"),
 
     path('event/<int:event_id>/', views.event_action, name="event"),
+    #path('event/<int:event_id>/<int:chat_id>/', views.event_chat_action, name="eventChat"),
     path('photo/<int:event_id>/', views.get_photo, name="photo"),
     path('pfp/<int:user_id>/', views.get_pfp, name="pfp"),
     path('editevent/<int:event_id>/', views.event_action, name="editevent"),
+    #path('editevent/<int:event_id>/<int:chat_id>/', views.event_chat_action, name="editeventChat"),
 
     path('headliner/add-message', views.add_message, name='ajax-add-message'),
-    path('headliner/get-event', views.get_event, name='ajax-get-event'),
+    path('headliner/get-event/<int:event_id>/', views.get_event, name='ajax-get-event'),
 ]
