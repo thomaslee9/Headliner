@@ -8,13 +8,13 @@ from django.urls import reverse
 from django.http import HttpResponse, Http404
 
 from headliner.forms import LoginForm
-from headliner.forms import RegisterForm, RSVPForm, MyProfileForm
+from headliner.forms import RegisterForm, RSVPForm, MyProfileForm, CreateGroupForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-from headliner.models import Event, Profile, Message
+from headliner.models import Event, Profile, Message, ChatGroup
 from django.utils import timezone
 from headliner.forms import EventForm
 from django.http import HttpResponse
@@ -178,6 +178,7 @@ def event_action(request, event_id):
     context['event'] = event
     context['rsvp_name'] = 'RSVP'
     context['userID'] = request.user.id
+    context['chat_groups'] = event.groups.all()
     user = request.user
     try:
         profile = Profile.objects.get(user=user)
@@ -188,7 +189,9 @@ def event_action(request, event_id):
 
     if request.method == 'GET':
         rsvp_form = RSVPForm()
+        groupcreation_form = CreateGroupForm()
         context['form'] = rsvp_form
+        context['createGroup_form'] = groupcreation_form
         if not is_attending:
             pass
         else:
@@ -199,14 +202,81 @@ def event_action(request, event_id):
     if not rsvp_form.is_valid():
         context = { 'form': rsvp_form, 'event':event }
         return render(request, 'headliner/event.html', context)
-
+    
     if not is_attending:
         profile.attending.add(event)
         context['rsvp_name'] = 'Un-RSVP'
     else:
         profile.attending.remove(event)
+    
+    createGroup_form = CreateGroupForm(request.POST)
+    if not createGroup_form.is_valid():
+        context = { 'createGroup_form': createGroup_form, 'event':event, 'form': rsvp_form }
+        return render(request, 'headliner/event.html', context)
+    else:
+        if 'create_group_button' in request.POST:
+            group_name = createGroup_form.cleaned_data['name']
+            new_group = ChatGroup.objects.create(name=group_name, event=event)
+            event.groups.add(new_group)
+
     context['form'] = rsvp_form
+    context['createGroup_form'] = createGroup_form
     context['event'] = event
+    context['chat_groups'] = event.groups.all()
+    return render(request, 'headliner/event.html', context)
+
+@login_required
+def event_chat_action(request, event_id, chat_id):
+    context = {}
+    event = get_object_or_404(Event, id=event_id)
+    context['event'] = event
+    context['rsvp_name'] = 'RSVP'
+    context['userID'] = request.user.id
+    context['chat_groups'] = event.groups.all()
+    user = request.user
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = None
+        return render(request, 'headliner/event.html', context)
+    is_attending = profile.attending.filter(id=event.id).exists()
+
+    if request.method == 'GET':
+        rsvp_form = RSVPForm()
+        groupcreation_form = CreateGroupForm()
+        context['form'] = rsvp_form
+        context['createGroup_form'] = groupcreation_form
+        if not is_attending:
+            pass
+        else:
+            context['rsvp_name'] = 'Un-RSVP'
+        return render(request, 'headliner/event.html', context)
+
+    rsvp_form = RSVPForm(request.POST)
+    if not rsvp_form.is_valid():
+        context = { 'form': rsvp_form, 'event':event }
+        return render(request, 'headliner/event.html', context)
+    
+    if not is_attending:
+        profile.attending.add(event)
+        context['rsvp_name'] = 'Un-RSVP'
+    else:
+        profile.attending.remove(event)
+    
+    createGroup_form = CreateGroupForm(request.POST)
+    if not createGroup_form.is_valid():
+        context = { 'createGroup_form': createGroup_form, 'event':event, 'form': rsvp_form }
+        return render(request, 'headliner/event.html', context)
+    else:
+        if 'create_group_button' in request.POST:
+            group_name = createGroup_form.cleaned_data['name']
+            new_group = ChatGroup.objects.create(name=group_name, event=event)
+            event.groups.add(new_group)
+
+    context['form'] = rsvp_form
+    context['createGroup_form'] = createGroup_form
+    context['event'] = event
+    context['chat_groups'] = event.groups.all()
     return render(request, 'headliner/event.html', context)
 
 
@@ -308,7 +378,6 @@ def attending_action(request):
     user = request.user
     user_profile = get_object_or_404(Profile, user = user)
     events_attending = user_profile.attending.all()
-    print(events_attending)
     if request.method == 'GET':
         context = {'user': user, 'entries': events_attending}
         return render(request, 'headliner/attending.html', context)
@@ -341,7 +410,10 @@ def create_event_action(request):
     entry.location = event_form.cleaned_data['location']
     entry.date = event_form.cleaned_data['date']
     entry.price = event_form.cleaned_data['price']
+    entry.save()
 
+    chat_group = ChatGroup.objects.create(name="Global", event=entry)
+    entry.groups.add(chat_group)
     entry.save()
 
     context = { 'user': user, 'form': EventForm(), 'status': entry.title + " event has been posted!!" }
@@ -392,11 +464,20 @@ def add_message(request):
     
     if not 'event_id' in request.POST or not request.POST['event_id'] or not request.POST['event_id'].isdigit():
         return _my_json_error_response("Comment must be added to an Event.", status=400)
-    
+
+
+    if not 'chat_id' in request.POST or not request.POST['chat_id'] or not request.POST['chat_id'].isdigit():
+        return _my_json_error_response("Comment must be added to an Event.", status=400)
+
     try: 
         event_id = int(request.POST['event_id'])
     except:
         return _my_json_error_response("Comment must be added to an Event (with int event_id).", status=400)
+    
+    try: 
+        chat_id = int(request.POST['chat_id'])
+    except:
+        return _my_json_error_response("Comment must be added to an Event (with int chat_id).", status=400)
     
     # Build Message
     new_chat = Message()
@@ -414,6 +495,8 @@ def add_message(request):
     
     new_chat.save()
 
+    chatGroup = get_object_or_404(ChatGroup, id=chat_id)
+    chatGroup.messages.add(new_chat)
     return get_new_chat(request)
 
 
@@ -438,25 +521,34 @@ def get_new_chat(request):
     return HttpResponse(response_json, content_type='application/json')
 
 
-def get_event(request):
+def get_event(request, event_id):
     if not request.user.is_authenticated:
         return _my_json_error_response("You must be logged in to do this operation", status=401)
+
+    try:
+        curr_event = Event.objects.get(id=event_id)
+    except:
+        return _my_json_error_response("Comment needs an existing Event.", status=400)
+    
+    chat_groups = curr_event.groups.all()
     
     response_data = {}
-    response_data['allMessages'] = []
 
     # Collect all Messages
-    for model_item in Message.objects.all():
-        my_item = {
-            'id': model_item.id,
-            'text': model_item.text,
-            'created_by': model_item.created_by.id,
-            'username': model_item.created_by.username,
-            'creation_time': model_item.creation_time,
-            'event_id': model_item.event.id,
-        }
-        response_data['allMessages'].append(my_item)
-
+    for group_item in chat_groups:
+        response_data[str(group_item.id)] = []
+        for model_item in group_item.messages.all():
+            my_item = {
+                'group_name': group_item.name,
+                'group_id': group_item.id,
+                'id': model_item.id,
+                'text': model_item.text,
+                'created_by': model_item.created_by.id,
+                'username': model_item.created_by.username,
+                'creation_time': model_item.creation_time,
+                'event_id': model_item.event.id,
+            }
+            response_data[str(group_item.id)].append(my_item)
     response_json = json.dumps(response_data)
 
     return HttpResponse(response_json, content_type='application/json')

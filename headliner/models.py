@@ -16,17 +16,19 @@ class Event(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price', null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="entry_creators", verbose_name='Created By')
     creation_time = models.DateTimeField(auto_now_add=True, verbose_name='Creation Time')
-    groups = models.ManyToManyField('EventGroup', related_name='groups')
+    groups = models.ManyToManyField('ChatGroup', related_name='groups')
 
     def __str__(self):
         return f"Event(id={self.id})"
 
-class EventGroup(models.Model):
+class ChatGroup(models.Model):
+    name = models.CharField(max_length=100, verbose_name='group_name', null=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     messages = models.ManyToManyField('Message', related_name='messages')
+    users = models.ManyToManyField(User, related_name='users')
 
     def __str__(self):
-        return f"EventGroup(id={self.id})"
+        return f"ChatGroup(id={self.id})"
 
 class Profile(models.Model):
     prof_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True, verbose_name='Add a Photo')
