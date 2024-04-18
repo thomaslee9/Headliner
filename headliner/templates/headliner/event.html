@@ -14,7 +14,9 @@ event.html -->
                     id="id_event_link_${item.id}">{{event.title}}</a>
             </div>
             <div class="image-container">
+                {% if event.event_picture %}
                 <img src="{{event.event_picture.url}}" alt="Event Picture" class="card-img-top event-picture rounded-5 p-2">
+                {% endif %}
             </div>
             <div class="description">
                 Description:
@@ -33,7 +35,7 @@ event.html -->
                     class=" btn btn-danger text-white fw-bold link-underline link-underline-opacity-0"
                     id="id_event_profile_${item.id}">Edit Event</a>
                 {% else %}
-                <a href="{% url 'otherprofile' userID%}"
+                <a href="{% url 'otherprofile' event.created_by.id %}"
                     class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0"
                     id="id_event_profile_${item.id}">Event by {{event.created_by}}</a>
                 {% endif %}
