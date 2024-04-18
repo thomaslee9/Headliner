@@ -239,3 +239,23 @@ headliner.css */
 .h4 {
     text-align: center;
 }
+
+#map-container {
+    display: flex;
+    width: 1000px; /* Full width */
+    height: 500px; /* Set the height as needed */
+    margin-left: 20px;
+}
+
+#map {
+    flex: 1;
+    width: 50%; /* Full width of the map container */
+    height: 100%; /* Full height of the map container */
+}
+
+#map-event {
+    flex: 1;
+    margin-left: 10%;
+    width: 40%;
+    height: 100%;
+}

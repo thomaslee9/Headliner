@@ -53,7 +53,7 @@ function displayError(message) {
     errorElement.innerHTML = message
 }
 
-function updateList(items, searchTerm, byLocation) {
+async function updateList(items, searchTerm, byLocation) {
     let list = document.getElementById("events-container");
     list.innerHTML = ''; // Clear previous events
     // items.u
@@ -65,9 +65,119 @@ function updateList(items, searchTerm, byLocation) {
         }
     });
 
-    for (let event of filteredEvents) {
-        list.prepend(makeEventElement(event, items.user_id));
+    if (byLocation){
+        list.innerHTML = '';
+        initGlobalMap(searchTerm, filteredEvents, items.user_id) 
+    } else {
+        let map = document.getElementById("map")
+        let map_event = document.getElementById("map-event")
+        map.innerHTML = ''
+        map_event.innerHTML = ''
+        const searchBox = document.getElementById("search-input");
+        const newSearchBox = searchBox.cloneNode(true);
+        searchBox.parentNode.replaceChild(newSearchBox, searchBox);
+        for (let event of filteredEvents) {
+            list.prepend(makeEventElement(event, items.user_id));
+        }
     }
+}
+
+async function initGlobalMap(searchTerm, events, userID) {
+  const { Map } = await google.maps.importLibrary("maps");
+  const { InfoWindow } = await google.maps.importLibrary("maps");
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+  const { PinElement } = await google.maps.importLibrary("marker");
+
+  const firstEventCoordinates = await getLocationCoordinates(events[0].location);
+
+  const map = new Map(document.getElementById("map"), {
+    zoom: 12,
+    center: firstEventCoordinates,
+    mapId: "185b2b60fd97243d",
+  });
+
+  const input = document.getElementById("search-input");
+  const searchBox = new google.maps.places.SearchBox(input);
+
+  searchBox.addListener("places_changed", () => {
+    const places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // For each place, get the icon, name and location.
+    const bounds = new google.maps.LatLngBounds();
+
+    places.forEach((place) => {
+      if (!place.geometry || !place.geometry.location) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+
+  // Create an info window to share between markers.
+  const infoWindow = new InfoWindow();
+  
+  // Iterate over each event and create a marker for it.
+  events.forEach(async (event, i) => {
+    // Convert event location to coordinates (you need to implement this)
+    const coordinates = await getLocationCoordinates(event.location);
+    // Create a pin element for the marker.
+    const pin = new PinElement({
+      glyph: `${i + 1}`,
+    });
+
+    // Create the marker.
+    const marker = new AdvancedMarkerElement({
+      position: coordinates,
+      map,
+      title: `${i + 1}. ${event.location}`,
+      content: pin.element,
+    });
+
+    // Add a click listener for each marker, and set up the info window.
+    marker.addListener("click", ({ domEvent, latLng }) => {
+      const { target } = domEvent;
+
+      infoWindow.close();
+      infoWindow.setContent(event.title);
+      infoWindow.open(marker.map, marker);
+      let map_event = document.getElementById("map-event") 
+      map_event.innerHTML = ""
+      map_event.prepend(makeEventElement(event, userID)) 
+    });
+  });
+}
+
+function createMarker(place) {
+  if (!place.geometry || !place.geometry.location) return;
+
+  const marker = new google.maps.Marker({
+    map,
+    position: place.geometry.location,
+  });
+}
+
+// Function to convert location string to coordinates (geocoding).
+async function getLocationCoordinates(location) {
+  // You need to implement this function using a geocoding service.
+  // This could involve making a request to a geocoding API.
+  // For example, using Google Maps Geocoding API:
+  
+  const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(location)}&key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc`);
+  const data = await response.json();
+  console.log(data.results[0].geometry.location)
+  return data.results[0].geometry.location;
 }
 
 //makes the post element
