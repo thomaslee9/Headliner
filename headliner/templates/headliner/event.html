@@ -33,7 +33,7 @@ event.html -->
                     class=" btn btn-danger text-white fw-bold link-underline link-underline-opacity-0"
                     id="id_event_profile_${item.id}">Edit Event</a>
                 {% else %}
-                <a href="{% url 'otherprofile' userID%}"
+                <a href="{% url 'otherprofile' event.created_by.id %}"
                     class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0"
                     id="id_event_profile_${item.id}">Event by {{event.created_by}}</a>
                 {% endif %}
@@ -79,9 +79,9 @@ event.html -->
                 const groupLinks = document.querySelectorAll('.group-link');
                 groupLinks.forEach(function(link) {
                     link.addEventListener('click', function(event) {
-                        event.preventDefault(); 
+                        event.preventDefault();
                         groupId = this.getAttribute('data-group-id');
-                        loadMessages(eventId, groupId); 
+                        loadMessages(eventId, groupId);
                     });
                 });
             });
