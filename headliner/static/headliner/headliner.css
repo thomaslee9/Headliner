@@ -128,22 +128,34 @@ headliner.css */
     outline: auto;
 }
 
-#event-form {
-    background-color: darkblue;
-    width: 270px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: lightblue;
-    margin: 8px;
+#event_form {
+    margin-left: 20px;
+    margin-right: 20px;
     font-family: Helvetica;
-
     font-size: 20px;
-    font-style: bold;
-    color: lightblue;
-
-    text-align: center;
 }
 
+textarea, input {
+    border-style: solid;
+    /* margin: 20px; */
+    padding: 5px 5px;
+    font-family: Helvetica;
+    /* font-size: 20px; */
+    font-style: bold;
+    border: 2px solid;
+    border-color: darkblue;
+    border-radius: 4px;
+    opacity: .7;
+}
+
+input[type="file"] {
+    opacity: 1;
+    border: none;
+}
+
+#id_event_description {
+    height: 200px;
+}
 
 .event-div {
     background: linear-gradient(to bottom, rgba(0,0,0, .5) 80%, rgba(111, 109, 109, 0.473) 100%);
@@ -208,8 +220,12 @@ headliner.css */
 }
 
 .map {
-    width: auto;
-    height: 300px;
+    width: 50vw;
+    height: 50vh;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* center the map at the top of the container*/
+    margin: 0 auto;
 }
 
 .search-container {
@@ -240,22 +256,12 @@ headliner.css */
     text-align: center;
 }
 
-#map-container {
-    display: flex;
-    width: 1000px; /* Full width */
-    height: 500px; /* Set the height as needed */
-    margin-left: 20px;
-}
 
-#map {
-    flex: 1;
-    width: 50%; /* Full width of the map container */
-    height: 100%; /* Full height of the map container */
-}
 
 #map-event {
     flex: 1;
-    margin-left: 10%;
+    /* margin-left: 10%; */
+    margin: auto;
     width: 40%;
     height: 100%;
 }
