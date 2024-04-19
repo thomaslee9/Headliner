@@ -421,6 +421,40 @@ def create_event_action(request):
 
 
 
+@login_required
+def edit_event_action(request, event_id):
+    user = request.user
+    context = {}
+    event = get_object_or_404(Event, id=event_id)
+    context['event'] = event
+
+    if request.method == 'GET':
+        context['form'] = EventForm(instance=event)
+        return render(request, 'headliner/editEvent.html', context)
+    
+    # event.created_by=user
+    # event.creation_time=timezone.now()
+
+    event_form = EventForm(request.POST)
+    if 'event_picture' in request.FILES:
+        event.event_picture = request.FILES['event_picture']
+
+    if not event_form.is_valid():
+        context = { 'form': event_form, 'user':user }
+        return render(request, 'headliner/createEvent.html', context)
+
+    event.event_description = event_form.cleaned_data['event_description']
+    event.title = event_form.cleaned_data['title']
+    event.location = event_form.cleaned_data['location']
+    event.date = event_form.cleaned_data['date']
+    event.price = event_form.cleaned_data['price']
+    event.save()
+
+    context = { 'user': user, 'form': event_form, 'status': event.title + " event has been updated!!", 'event': event }
+
+    return render(request, 'headliner/event.html', context)
+
+
 def get_global(request):
     if not request.user.is_authenticated:
         return _my_json_error_response("You must be logged in to do this operation", status=401)
