@@ -28,10 +28,10 @@ class LoginForm(forms.Form):
 
         if not user:
             raise forms.ValidationError("Invalid username or password please try again")
-        
+
         # Return Cleaned Data
         return cleaned_data
-    
+
 
 class RegisterForm(forms.Form):
     username = forms.CharField(label='Username', required=True, max_length=20)
@@ -47,17 +47,17 @@ class RegisterForm(forms.Form):
         # Parse password field inputs
         password = cleaned_data.get('password')
         confirm = cleaned_data.get('confirm_password')
-        # Check confirmation password 
+        # Check confirmation password
         if password and confirm and password != confirm:
             raise forms.ValidationError("Passwords did not match.")
-        
+
         # Return Cleaned Data
         return cleaned_data
-    
+
     def clean_username(self):
         # Parse username field input
         username = self.cleaned_data.get('username')
-        # Check if username is already taken 
+        # Check if username is already taken
         if User.objects.filter(username__exact=username):
             raise forms.ValidationError("Username is already taken. Please choose another.")
 
@@ -91,7 +91,7 @@ class MyProfileForm(forms.ModelForm):
         fields = ('bio', 'prof_picture')
         widgets = {
             'bio': forms.Textarea(attrs={'id':'bio_input_text', 'rows': 3}),
-            'prof_picture': forms.FileInput(attrs={'id':'profile_picture'})
+            'prof_picture': forms.FileInput(attrs={'id':'profile_upload'})
         }
         labels = {
             'bio': "Bio",
@@ -107,4 +107,3 @@ class MyProfileForm(forms.ModelForm):
         if picture.size > MAX_UPLOAD_SIZE:
             raise forms.ValidationError('File too big (max size is {0} bytes).'.format(MAX_UPLOAD_SIZE))
         return picture
-        
