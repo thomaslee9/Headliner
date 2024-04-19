@@ -1,0 +1,8 @@
+
+
+[Django]
+secret=
+
+[MYSQL]
+user=
+password=

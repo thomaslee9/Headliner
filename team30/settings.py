@@ -12,21 +12,25 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-
+from configparser import ConfigParser
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR2 = Path(__file__).resolve().parent.parent.parent
 
+CONFIG = ConfigParser()
+CONFIG.read(BASE_DIR2 / "config.ini")
+
+SECRET_KEY = CONFIG.get("Django", "secret")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p+hm#w8p$c7gzkyrz_19#49_!%cola-q^wyqgvt_i-_cx%3ya%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['18.216.16.110']
 
 
 # Application definition
@@ -38,7 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'headliner'
+    'headliner',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'team30.urls'
@@ -77,8 +86,11 @@ WSGI_APPLICATION = 'team30.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'OPTIONS': {'charset': 'utf8mb4'},
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': '',
+        'PASSWORD': '',
     }
 }
 
@@ -125,3 +137,29 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'headliner', 'static/images')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '81173301991-l12nkdr8csq2s2qb2m4evnltps6f6m18.apps.googleusercontent.com',
+            'secret': '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',
+            'key': '',
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'emails'

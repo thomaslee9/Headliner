@@ -7,51 +7,56 @@ event.html -->
 <div class="container-fluid">
 <div class="row">
     <div class="col-md-4 p-5">
-        <div class="event-div rounded-4 text-white" id="event-page">
-            <div class="post-container text-white">
-                <div class="title row">
-                    <a href="{% url 'event' event.id %}" class="h2 fw-bold text-white link-underline link-underline-opacity-0"
-                        id="id_event_link_${item.id}">{{event.title}}</a>
-                </div>
-                <div class="image-container">
-                    {% if event.event_picture %}
-                    <img src="{{event.event_picture.url}}" alt="Event Picture" class="card-img-top event-picture rounded-5 p-2">
-                    {% endif %}
-                </div>
-                <div class="description">
-                    Description:
-                    <br>
-                    {{event.event_description}}
-                </div>
-                <div class="price">
-                    Price:
-                    <br>
-                    {{event.price}}
-                </div>
-                <div class="title m-3">
-                    <!-- if profile is user's profile link to myprofile -->
-                    {% if event.created_by.id == userID %}
-                    <a href="{% url 'editevent' event.id %}"
-                        class=" btn btn-danger text-white fw-bold link-underline link-underline-opacity-0"
-                        id="id_event_profile_${item.id}">Edit Event</a>
-                    {% else %}
-                    <a href="{% url 'otherprofile' event.created_by.id %}"
-                        class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0"
-                        id="id_event_profile_${item.id}">Event by {{event.created_by}}</a>
-                    {% endif %}
-                </div>
-                <div class="title">
-                    <span id="id_event_date_time_${item.id}" class="event-date">Posted on: {{event.date}} </span>
-                </div>
-                {% if event.created_by.id != userID %}
-                <div class="title m-3">
-                    <form action="{% url 'event' event.id%}" id="rsvo_form" method="POST">
-                        {% csrf_token %}
-                        <button class="btn btn-danger text-white fw-bold link-underline link-underline-opacity-0" id="rsv_button">{{ rsvp_name }}</button>
-                    </form>
-                </div>
+    <div class="event-div rounded-4 text-white" id="event-page">
+        <div class="post-container text-white">
+            <div class="title row">
+                <a href="/event/${item.id}" class="h2 fw-bold text-white link-underline link-underline-opacity-0"
+                    id="id_event_link_${item.id}">{{event.title}}</a>
+            </div>
+            <div class="image-container">
+                {% if event.event_picture %}
+                <img src="{{event.event_picture.url}}" alt="Event Picture" class="card-img-top event-picture rounded-5 p-2">
                 {% endif %}
             </div>
+            <div class="description">
+                Description:
+                <br>
+                {{event.event_description}}
+            </div>
+            <div >
+                Location:
+                <br>
+                {{event.location}}
+            </div>
+            <div class="price">
+                Price:
+                <br>
+                {{event.price}}
+            </div>
+            <div class="title m-3">
+                <!-- if profile is user's profile link to myprofile -->
+                {% if event.created_by.id == userID %}
+                <a href="{% url 'editevent' event.id %}"
+                    class=" btn btn-danger text-white fw-bold link-underline link-underline-opacity-0"
+                    id="id_event_profile_${item.id}">Edit Event</a>
+                {% else %}
+                <a href="{% url 'otherprofile' event.created_by.id %}"
+                    class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0"
+                    id="id_event_profile_${item.id}">Event by {{event.created_by.first_name}} {{event.created_by.last_name}}</a>
+                {% endif %}
+            </div>
+            <div class="title">
+                <span id="id_event_date_time_${item.id}" class="event-date">Event on: {{event.date}} </span>
+            </div>
+            {% if event.created_by.id != userID %}
+            <div class="title m-3">
+                <form action="{% url 'event' event.id%}" id="rsvo_form" method="POST">
+                  {% csrf_token %}
+                  <button class="btn btn-danger text-white fw-bold link-underline link-underline-opacity-0" id="rsv_button">{{ rsvp_name }}</button>
+                 </form>
+             </div>
+             {% endif %}
+          </div>
         </div>
     </div>
     <div class="col-md-7">
