@@ -4,6 +4,7 @@ login.html -->
 {% extends "headliner/base.html" %}
 {% load static %}
 {% block navbar %}
+{% load socialaccount %}
 <nav class="navbar navbar-expand-lg justify-content-center fs-3">
     <ul class="navbar-nav">
         <div class="container-fluid"></div>
@@ -22,11 +23,15 @@ login.html -->
 
     <div class="login event-div rounded-4 text-white ">
         <form action="log-in" method="POST">
+            {% csrf_token %}
             <table>
                 {{form.as_table}}
             </table>
             <button id="login_button" type="submit">Login</button>
+        </form>
+        <form method="post" action="/accounts/google/login/?process=login&next=%2Fglobal%2F">
             {% csrf_token %}
+            <button id="login_button" type="submit">Login with Google</button>
         </form>
     </div>
 {% endblock %}
