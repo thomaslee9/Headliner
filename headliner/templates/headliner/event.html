@@ -14,7 +14,9 @@ event.html -->
                     id="id_event_link_${item.id}">{{event.title}}</a>
             </div>
             <div class="image-container">
+                {% if event.event_picture %}
                 <img src="{{event.event_picture.url}}" alt="Event Picture" class="card-img-top event-picture rounded-5 p-2">
+                {% endif %}
             </div>
             <div class="description">
                 Description:

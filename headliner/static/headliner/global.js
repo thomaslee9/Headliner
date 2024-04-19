@@ -11,6 +11,7 @@ const CONFIGURATION = {
     "capabilities": {"addressAutocompleteControl":true,"mapDisplayControl":true,"ctaControl":true}
   };
 
+var prevChatId = -1;
 function getList(searchTerm, byLocation) {
     let xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function() {
@@ -329,7 +330,10 @@ function updateEventPage(xhr, chat_id) {
 function updateMessages(data, chat_id) {
     let msgList = document.getElementById("message-list")
     let msgIdBase = "id_message_div_"
-    msgList.innerHTML = ''
+    if (chat_id !== prevChatId){
+        prevChatId = chat_id
+        msgList.innerHTML = ''
+    }
 
     if (Object.keys(data).length === 0) return
 
