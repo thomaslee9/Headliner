@@ -64,8 +64,7 @@ function displayError(message) {
 
 async function updateList(items, searchTerm, byLocation) {
     let list = document.getElementById("events-container");
-    list.innerHTML = ''; // Clear previous events
-    // items.u
+    list.innerHTML = ''; 
     let filteredEvents = items.events.filter(event => {
         if (byLocation) {
             return event.location.toLowerCase().includes(searchTerm);
@@ -78,20 +77,44 @@ async function updateList(items, searchTerm, byLocation) {
         list.innerHTML = '';
         initGlobalMap(searchTerm, filteredEvents, items.user_id)
     } else {
+        let input = document.getElementById("search-input");
+        input.removeEventListener("places_changed", searchBoxListener);
         let map = document.getElementById("map")
         let map_event = document.getElementById("map-event")
         map.innerHTML = ''
         map_event.innerHTML = ''
-        const searchBox = document.getElementById("search-input");
-        const newSearchBox = searchBox.cloneNode(true);
-        searchBox.parentNode.replaceChild(newSearchBox, searchBox);
         for (let event of filteredEvents) {
             list.prepend(makeEventElement(event, items.user_id));
         }
     }
 }
 
+function searchBoxListener() {
+  const places = searchBox.getPlaces();
+
+  if (places.length == 0) {
+      return;
+  }
+
+  const bounds = new google.maps.LatLngBounds();
+
+  places.forEach((place) => {
+      if (!place.geometry || !place.geometry.location) {
+          console.log("Returned place contains no geometry");
+          return;
+      }
+
+      if (place.geometry.viewport) {
+          bounds.union(place.geometry.viewport);
+      } else {
+          bounds.extend(place.geometry.location);
+      }
+  });
+  map.fitBounds(bounds);
+}
+
 async function initGlobalMap(searchTerm, events, userID) {
+  console.log("initialized")
   const { Map } = await google.maps.importLibrary("maps");
   const { InfoWindow } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
@@ -100,39 +123,16 @@ async function initGlobalMap(searchTerm, events, userID) {
   const firstEventCoordinates = await getLocationCoordinates(events[0].location);
 
   const map = new Map(document.getElementById("map"), {
-    zoom: 12,
-    center: firstEventCoordinates,
-    mapId: "185b2b60fd97243d",
+      zoom: 12,
+      center: firstEventCoordinates,
+      mapId: "185b2b60fd97243d",
   });
 
   const input = document.getElementById("search-input");
   const searchBox = new google.maps.places.SearchBox(input);
 
-  searchBox.addListener("places_changed", () => {
-    const places = searchBox.getPlaces();
-
-    if (places.length == 0) {
-      return;
-    }
-
-    // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
-
-    places.forEach((place) => {
-      if (!place.geometry || !place.geometry.location) {
-        console.log("Returned place contains no geometry");
-        return;
-      }
-
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    map.fitBounds(bounds);
-  });
+  // ADD THE EVENT LISTENER HERE
+  input.addEventListener("places_changed", searchBoxListener);
 
   // Create an info window to share between markers.
   const infoWindow = new InfoWindow();
