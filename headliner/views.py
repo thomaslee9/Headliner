@@ -197,21 +197,24 @@ def event_action(request, event_id):
         else:
             context['rsvp_name'] = 'Un-RSVP'
         return render(request, 'headliner/event.html', context)
-
+    print("RSVP CLICKED", request.POST)
     rsvp_form = RSVPForm(request.POST)
     if not rsvp_form.is_valid():
         context = { 'form': rsvp_form, 'event':event }
+        print('not valid rsvp')
         return render(request, 'headliner/event.html', context)
 
-    if not is_attending:
-        profile.attending.add(event)
-        context['rsvp_name'] = 'Un-RSVP'
-    else:
-        profile.attending.remove(event)
-
+    if 'create_group_button' not in request.POST:
+        if not is_attending:
+            profile.attending.add(event)
+        else:
+            profile.attending.remove(event)
+    rsvp_state = 'RSVP'
+    if event in profile.attending.all():
+        rsvp_state = 'Un-RSVP'
     createGroup_form = CreateGroupForm(request.POST)
     if not createGroup_form.is_valid():
-        context = { 'createGroup_form': createGroup_form, 'event':event, 'form': rsvp_form }
+        context = { 'createGroup_form': createGroup_form, 'event':event, 'form': rsvp_form, 'rsvp_name': rsvp_state, 'chat_groups': event.groups.all() }
         return render(request, 'headliner/event.html', context)
     else:
         if 'create_group_button' in request.POST:
@@ -223,6 +226,7 @@ def event_action(request, event_id):
     context['createGroup_form'] = createGroup_form
     context['event'] = event
     context['chat_groups'] = event.groups.all()
+    context['rsvp_name'] = rsvp_state
     return render(request, 'headliner/event.html', context)
 
 @login_required
