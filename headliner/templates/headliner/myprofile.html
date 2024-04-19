@@ -10,34 +10,57 @@ myprofile.html -->
 {% endblock %}
 
 {% block content %}
-<div class="box text-white">
-    My Profile Page
-</div>
-
-{% if request.user.profile.prof_picture %}
-    <img id="profile_picture" src="{% url 'pfp' request.user.id %}" style="height:150px; width:150px;" class="pfp">
-    <br>
-{% else %}
-    <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture"
-    style="height:150px; width:150px;" class="pfp">
-    <br>
-{% endif %}
-
-<br>
-
-<form enctype="multipart/form-data" action="myprofile" id="myprofile_form" class="web_form" method="POST"> 
-
-    <div class="nav-item box rounded">
-        Edit profile:
+<div class="row prof-page">
+    <div class="col-md-5  prof-details">
+        <div class="container" id="page_name">
+            {% block page_header %} <h1 class="display-3 fw-bold text-white">My Profile</h1> {% endblock %}
+        </div>
+        <div class="msg-div m-1">
+            <div class="container">
+                <h1 id="prof_name" class="display-4 fw-bold text-warning">{{request.user.first_name}} {{request.user.last_name}}</h1>
+            </div>
+            {% if request.user.profile.prof_picture %}
+                <img id="profile_picture" src="{% url 'pfp' request.user.id %}" class="pp">
+                <br>
+            {% else %}
+                <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture" class="">
+                <br>
+            {% endif %}
+            {% if request.user.profile.bio %}
+            <div class="container">
+                <h1 id="prof-bio" class="display-5 fw-bold text-info">{{request.user.profile.bio}}</h1>
+            </div>
+            {% endif %}
+            <div class="container">
+                <h1 id="prof-email" class="display-6 fw-bold text-success">{{request.user.email}}</h1>
+            </div>
+        </div>
     </div>
+    <div class="col-md-7">
+        <div class="container" id="page_name">
+          <h1 class="display-3 fw-bold text-white">Edit Profile</h1>
+        </div>
+        <div class="post-container rounded-4 text-white">
+            <form enctype="multipart/form-data" action="myprofile" id="myprofile_form" class="web_for" method="POST">
+                <!-- <div class="container display-5 fw-bold text-white">
+                    Edit profile:
+                </div> -->
 
-    <table>
-        {{ form.as_table }}
-    </table>
+                <!-- <div class="container display-5 fw-bold text-white"></div> -->
+                <div class="login rounded-4 text-white m-3">
+                    <!-- <form action="{% url 'register' %}" method="POST"> -->
+                        <table class="form-table">
+                            {{form.as_table}}
+                        </table>
+                        <!-- <button id="register_button" type="submit">Register</button> -->
+                        {% csrf_token %}
+                    <!-- </form> -->
+                </div>
 
-    <button id="update_profile_button" type="submit"> Submit </button>
-
-    {% csrf_token %}
-
-</form>
+                <button id="update_profile_button" type="submit"> Submit </button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

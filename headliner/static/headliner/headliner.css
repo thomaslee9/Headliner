@@ -159,6 +159,8 @@ textarea, input {
 input[type="file"] {
     opacity: 1;
     border: none;
+    /* width: 200px; */
+
 }
 
 #id_event_description {
@@ -270,6 +272,35 @@ input[type="file"] {
     align-content: flex-start;
     width: 300px; /* Adjust width as needed */
     margin: auto; /* Center the search bar */
+}
+
+#profile_picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: auto;
+}
+
+#prof_name, #prof-email, #prof-bio {
+    margin: auto;
+}
+
+.prof-page {
+   padding-top: 20px;
+}
+
+.pp {
+    /* center image */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    width: 50%;
+}
+
+.form-table {
+    width: 500px;
 }
 
 #search-input {

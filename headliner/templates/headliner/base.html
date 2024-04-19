@@ -15,13 +15,14 @@ login.html -->
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <title> {% block title %} Headliner {% endblock %} </title>
 </head>
-
 <body class="body">
+  {% block prof_icon %}
   <div class="position-absolute top-0 end-0 p-0 m-0">
       <a href="{% url 'myprofile' %}">
         <img src="{% static 'images/prof_icon.png' %}" class="pfp">
       </a>
   </div>
+  {% endblock %}
   <div class="title m-3">
     <h1 class="display-2 fw-bold text-white">HEADLINER</h1>
   </div>
