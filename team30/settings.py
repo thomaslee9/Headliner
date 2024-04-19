@@ -26,10 +26,6 @@ SECRET_KEY = CONFIG.get("Django", "secret")
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-<<<<<<< HEAD
-=======
-SECRET_KEY = 'pyw6ow8l%%68i=s&qt@_dosn_3a9q&+wvfk2n^6z^r=9g3z6sf'
->>>>>>> 5ba68a993b31820bd3856f996dc13c207e4e5769
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
