@@ -23,7 +23,7 @@ myprofile.html -->
                 <img id="profile_picture" src="{% url 'pfp' request.user.id %}" class="pp">
                 <br>
             {% else %}
-                <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture" class="">
+                <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture" class="pp">
                 <br>
             {% endif %}
             {% if request.user.profile.bio %}
