@@ -48,6 +48,7 @@ event.html -->
             <div class="title">
                 <span id="id_event_date_time_${item.id}" class="event-date">Event on: {{event.date}} </span>
             </div>
+            <br>
             <div>
                 <div>
                     {{numGuests}} people are attending this event.
@@ -57,7 +58,9 @@ event.html -->
                 </div>
                 {% for user in attendees %}
                     <div>
-                        {{user.first_name}} {{user.last_name}}
+                        <a href="{% url 'otherprofile' user.id %}" class=" btn btn-dark text-white fw-bold link-underline link-underline-opacity-0">
+                            {{user.first_name}} {{user.last_name}}
+                        </a>
                     </div>
                 {% endfor %}
             </div>
