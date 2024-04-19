@@ -48,6 +48,19 @@ event.html -->
             <div class="title">
                 <span id="id_event_date_time_${item.id}" class="event-date">Event on: {{event.date}} </span>
             </div>
+            <div>
+                <div>
+                    {{numGuests}} people are attending this event.
+                </div>
+                <div>
+                    Attendees:
+                </div>
+                {% for user in attendees %}
+                    <div>
+                        {{user.first_name}} {{user.last_name}}
+                    </div>
+                {% endfor %}
+            </div>
             {% if event.created_by.id != userID %}
             <div class="title m-3">
                 <form action="{% url 'event' event.id%}" id="rsvo_form" method="POST">

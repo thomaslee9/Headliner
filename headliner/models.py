@@ -18,6 +18,8 @@ class Event(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True, verbose_name='Creation Time')
     groups = models.ManyToManyField('ChatGroup', related_name='groups')
 
+    attendees = models.ManyToManyField(User, related_name='attendees')
+
     def __str__(self):
         return f"Event(id={self.id})"
 
