@@ -202,13 +202,13 @@ def event_action(request, event_id):
     if not rsvp_form.is_valid():
         context = { 'form': rsvp_form, 'event':event }
         return render(request, 'headliner/event.html', context)
-    
+
     if not is_attending:
         profile.attending.add(event)
         context['rsvp_name'] = 'Un-RSVP'
     else:
         profile.attending.remove(event)
-    
+
     createGroup_form = CreateGroupForm(request.POST)
     if not createGroup_form.is_valid():
         context = { 'createGroup_form': createGroup_form, 'event':event, 'form': rsvp_form }
@@ -256,13 +256,13 @@ def event_chat_action(request, event_id, chat_id):
     if not rsvp_form.is_valid():
         context = { 'form': rsvp_form, 'event':event }
         return render(request, 'headliner/event.html', context)
-    
+
     if not is_attending:
         profile.attending.add(event)
         context['rsvp_name'] = 'Un-RSVP'
     else:
         profile.attending.remove(event)
-    
+
     createGroup_form = CreateGroupForm(request.POST)
     if not createGroup_form.is_valid():
         context = { 'createGroup_form': createGroup_form, 'event':event, 'form': rsvp_form }
@@ -461,7 +461,7 @@ def add_message(request):
 
     if not 'message_text' in request.POST or not request.POST['message_text']:
         return _my_json_error_response("You must enter a Chat Message to add.", status=400)
-    
+
     if not 'event_id' in request.POST or not request.POST['event_id'] or not request.POST['event_id'].isdigit():
         return _my_json_error_response("Comment must be added to an Event.", status=400)
 
@@ -469,16 +469,16 @@ def add_message(request):
     if not 'chat_id' in request.POST or not request.POST['chat_id'] or not request.POST['chat_id'].isdigit():
         return _my_json_error_response("Comment must be added to an Event.", status=400)
 
-    try: 
+    try:
         event_id = int(request.POST['event_id'])
     except:
         return _my_json_error_response("Comment must be added to an Event (with int event_id).", status=400)
-    
-    try: 
+
+    try:
         chat_id = int(request.POST['chat_id'])
     except:
         return _my_json_error_response("Comment must be added to an Event (with int chat_id).", status=400)
-    
+
     # Build Message
     new_chat = Message()
     new_chat.created_by = request.user
@@ -492,7 +492,7 @@ def add_message(request):
         new_chat.event = Event.objects.get(id=event_id)
     except:
         return _my_json_error_response("Comment needs an existing Event.", status=400)
-    
+
     new_chat.save()
 
     chatGroup = get_object_or_404(ChatGroup, id=chat_id)
@@ -514,6 +514,9 @@ def get_new_chat(request):
             'creation_time': newChat.creation_time,
             'event_id': newChat.event.id,
         }
+
+        if newChat.created_by.profile.prof_picture:
+            item['picture'] = newChat.created_by.profile.prof_picture.url
         response_data.append(item)
 
     response_json = json.dumps(response_data)
@@ -529,9 +532,9 @@ def get_event(request, event_id):
         curr_event = Event.objects.get(id=event_id)
     except:
         return _my_json_error_response("Comment needs an existing Event.", status=400)
-    
+
     chat_groups = curr_event.groups.all()
-    
+
     response_data = {}
 
     # Collect all Messages
@@ -548,6 +551,9 @@ def get_event(request, event_id):
                 'creation_time': model_item.creation_time,
                 'event_id': model_item.event.id,
             }
+
+            if model_item.created_by.profile.prof_picture:
+                my_item['picture'] = model_item.created_by.profile.prof_picture.url
             response_data[str(group_item.id)].append(my_item)
     response_json = json.dumps(response_data)
 

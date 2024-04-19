@@ -68,7 +68,7 @@ async function updateList(items, searchTerm, byLocation) {
 
     if (byLocation){
         list.innerHTML = '';
-        initGlobalMap(searchTerm, filteredEvents, items.user_id) 
+        initGlobalMap(searchTerm, filteredEvents, items.user_id)
     } else {
         let map = document.getElementById("map")
         let map_event = document.getElementById("map-event")
@@ -128,7 +128,7 @@ async function initGlobalMap(searchTerm, events, userID) {
 
   // Create an info window to share between markers.
   const infoWindow = new InfoWindow();
-  
+
   // Iterate over each event and create a marker for it.
   events.forEach(async (event, i) => {
     // Convert event location to coordinates (you need to implement this)
@@ -153,9 +153,9 @@ async function initGlobalMap(searchTerm, events, userID) {
       infoWindow.close();
       infoWindow.setContent(event.title);
       infoWindow.open(marker.map, marker);
-      let map_event = document.getElementById("map-event") 
+      let map_event = document.getElementById("map-event")
       map_event.innerHTML = ""
-      map_event.prepend(makeEventElement(event, userID)) 
+      map_event.prepend(makeEventElement(event, userID))
     });
   });
 }
@@ -174,7 +174,7 @@ async function getLocationCoordinates(location) {
   // You need to implement this function using a geocoding service.
   // This could involve making a request to a geocoding API.
   // For example, using Google Maps Geocoding API:
-  
+
   const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(location)}&key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc`);
   const data = await response.json();
   console.log(data.results[0].geometry.location)
@@ -370,13 +370,26 @@ function makeMessageHTML(msg) {
     newMsg.id = "id_message_div_" + msg.id
     newMsg.className = "message"
 
+    let pictureElement = '';
+    if (msg.picture) {
+      pictureElement = `<img src="${msg.picture}" alt="Prof Picture" class="img-fluid rounded-5">`;
+    }
+
     newMsg.innerHTML = `
-        <a href="/otherprofile/${msg.created_by}" id="id_msg_profile_${msg.id}"> Sent by ${msg.username}:</a>
-        <p id="id_msg_text_${msg.id}" class="text-white"> ${sanitize(msg.text)} </p>
-        <p id="id_msg_date_time_${msg.id}" class="text-white"> ${msg.creation_time} </p>
-        <br>
+      <div class="row text-white msg-div bg-opacity-50">
+        <div class="col-md-4">
+          <a href="/otherprofile/${msg.created_by}" class="fw-bold text-white link-underline link-underline-opacity-0" id="id_msg_profile_${msg.id}">${msg.username}:</a>
+          <div class="prof-picture m-2">
+            ${pictureElement}
+          </div>
+          <p id="id_msg_date_time_${msg.id}" class="text-white timestamp"> ${msg.creation_time} </p>
+        </div>
+        <div class="text-white col-md-8 p-3">
+          <p id="id_msg_text_${msg.id}" class="text-white msg-text fw-bold text-white"> ${sanitize(msg.text)} </p>
+        </div>
+      </div>
     `
-    
+
     return newMsg
 }
 

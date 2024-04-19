@@ -71,14 +71,37 @@ headliner.css */
     height: auto;
 }
 
+.prof-picture {
+    /* display: block; */
+    margin: 0 auto;
+    max-width: 80px;
+    max-height: 70px;
+    /* width: auto;
+    height: auto; */
+}
+
+.groups {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.244) 80%, rgba(111, 109, 109, 0.473) 100%);
+    border-top-left-radius: 20px;
+    /* border-top-right-radius: 20px; */
+    border-bottom-left-radius: 20px;
+    margin-right: 20px;
+    /* border-bottom-right-radius: 20px; */
+    /* margin-right: 10px; */
+}
+
+.group {
+    margin: auto;
+}
+
+.group-link {
+    font-size: 20px;
+}
+
 .post-container {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
-}
-
-.login {
-
 }
 
 #login-form {
@@ -161,6 +184,28 @@ input[type="file"] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.msg-div {
+    background: linear-gradient(to bottom, rgba(177, 19, 179, 0.355) 70%, rgba(124, 98, 218, 0.413) 100%);
+    /* background-color: #7524f6; */
+    margin-bottom: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    /* rounded corners */
+    border-radius: 10px;
+    font-size: 20px;
+    font-style: bold;
+}
+
+.timestamp {
+    font-size: 15px;
+    font-style: italic;
+}
+
+.msg-text {
+    font-size: 30px;
 }
 
 .tag-div {
