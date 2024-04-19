@@ -11,22 +11,36 @@ otherprofile.html -->
 
 {% block content %}
 
-<div class="box text-white">
-    Other Profile Page
+<div class="container" id="page_name">
+    {% block page_header %} <h1 class="display-3 fw-bold text-white">{{profile.user.username}}'s Profile</h1> {% endblock %}
 </div>
 
-{% if profile.prof_picture %}
-    <img id="profile_picture" src="{% url 'pfp' profile.id %}" style="height:150px; width:150px;" class="pfp">
-    <br>
-{% else %}
-    <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture"
-    style="height:150px; width:150px;" class="pfp">
-    <br>
-{% endif %}
-
-<div id="user_bio">
+<div class="d-flex align-items-center justify-content-center">
+    <div class="col-md-5 msg-div m-1">
+        <div class="container">
+            <h1 id="prof_name" class="display-4 fw-bold text-warning">{{profile.user.first_name}} {{profile.user.last_name}}
+            </h1>
+        </div>
+        {% if profile.prof_picture %}
+        <img id="profile_picture" src="{% url 'pfp' profile.user.id %}" class="pp">
+        <br>
+        {% else %}
+        <img id="profile_picture" src="/static/images/default_pfp.png" alt="My Profile Picture" class="">
+        <br>
+        {% endif %}
+        {% if profile.bio %}
+        <div class="container">
+            <h1 id="prof-bio" class="display-5 fw-bold text-info">{{profile.user.profile.bio}}</h1>
+        </div>
+        {% endif %}
+        <div class="container">
+            <h1 id="prof-email" class="display-6 fw-bold text-success">{{profile.user.email}}</h1>
+        </div>
+    </div>
+</div>
+<!-- <div id="user_bio">
     {{ profile.bio }}
-</div>
+</div> -->
 
 <br>
 {% endblock %}

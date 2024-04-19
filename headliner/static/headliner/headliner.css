@@ -168,12 +168,12 @@ input[type="file"] {
 }
 #google_button {
     position: relative;
-    padding: 10px 20px; 
-    background-color: #4285F4; 
-    color: #fff; 
+    padding: 10px 20px;
+    background-color: #4285F4;
+    color: #fff;
     border: none;
     border-radius: 4px;
-    font-size: 16px; 
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -302,6 +302,11 @@ input[type="file"] {
 
 .prof-page {
    padding-top: 20px;
+}
+
+.other-page {
+    /* margin: auto; */
+    align-content: center;
 }
 
 .pp {
