@@ -35,6 +35,7 @@ urlpatterns = [
     path('global', views.global_action, name='global'),
 
     path('', include('headliner.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
