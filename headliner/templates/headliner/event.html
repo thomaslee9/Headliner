@@ -6,7 +6,7 @@ event.html -->
 {% block content %}
 <div class="container-fluid">
 <div class="row">
-    <div class="col">
+    <div class="col-md-4 p-5">
     <div class="event-div rounded-4 text-white" id="event-page">
         <div class="post-container text-white">
             <div class="title row">
@@ -51,32 +51,54 @@ event.html -->
             {% if event.created_by.id != userID %}
             <div class="title m-3">
                 <form action="{% url 'event' event.id%}" id="rsvo_form" method="POST">
+                  {% csrf_token %}
+                  <button class="btn btn-danger text-white fw-bold link-underline link-underline-opacity-0" id="rsv_button">{{ rsvp_name }}</button>
+                 </form>
+             </div>
+             {% endif %}
+          </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-4 p-3">
+                <form method="post">
                     {% csrf_token %}
-                    <button class="btn btn-danger text-white fw-bold link-underline link-underline-opacity-0" id="rsv_button">{{ rsvp_name }}</button>
+                    {{ createGroup_form.name }}
+                    <button type="submit" name="create_group_button">Create Group</button>
                 </form>
             </div>
-            {% endif %}
-        </div>
-    </div>
-    </div>
-    <div class="col">
-        <form method="post">
-            {% csrf_token %}
-            {{ createGroup_form.as_p }}
-            <button type="submit" name="create_group_button">Create Group</button>
-        </form>
-        <div id="chat-groups-container">
-            {% for group in chat_groups %}
-                <div class="group">
-                    <a href="#" class="group-link" data-group-id="{{ group.id }}">{{ group.name }}</a>
+            <div class="col-md-8 p-3">
+                <div>
+                    <label for="id_message_input_text"
+                        class="btn btn-dark text-white fw-bold link-underline link-underline-opacity-0">New Message:</label>
+                    <input id="id_message_input_text" type="text" name="newChat">
+                    <button id="id_message_button" onclick="addMessage(eventId, groupId)">Send</button>
+                    <br>
+                    <span id="error" class="error"></span>
+                    {% csrf_token %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
+        <div class="row">
+            <div class="col-md-4 rounded groups">
+                <div id="chat-groups-container">
+                    {% for group in chat_groups %}
+                        <div class="group">
+                            <a href="#" class="group-link p-2 fw-bold text-white link-underline link-underline-opacity-0" data-group-id="{{ group.id }}">{{ group.name }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-7">
+                    <div id="message-list"> </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-1"></div> -->
+</div>
+
         <!-- AJAX LOAD CHAT MESSAGES -->
-
-        <div id="message-list"> </div>
-        <br>
-
         <script>
             const addChatURL = "{% url 'ajax-add-message' %}"
             const eventId = "{{event.id}}"
@@ -101,20 +123,4 @@ event.html -->
                 updateMessages();
             };
         </script>
-
-        <!-- AJAX SEND NEW CHAT FORM -->
-
-        <div class="title m-3"> SEND NEW CHAT HERE </div>
-        <div>
-            <label for="id_message_input_text" class="btn btn-dark text-white fw-bold link-underline link-underline-opacity-0">New Message:</label>
-            <input id="id_message_input_text" type="text" name="newChat">
-            <button id="id_message_button" onclick="addMessage(eventId, groupId)">Send</button>
-            <br>
-            <span id="error" class="error"></span>
-            {% csrf_token %}
-        </div>
-
-    </div>
-    </div>
-    </div>
 {% endblock %}
