@@ -4,7 +4,6 @@ global.html -->
 {% extends "headliner/base.html" %}
 {% load static %}
 {% block head_script %}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc&libraries=places,marker&callback=initMap" async defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
     <script src="{% static 'headliner/global.js' %}" type="text/javascript"></script>
 {% endblock %}

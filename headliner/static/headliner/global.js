@@ -11,6 +11,14 @@ const CONFIGURATION = {
     "capabilities": {"addressAutocompleteControl":true,"mapDisplayControl":true,"ctaControl":true}
   };
 
+document.addEventListener("DOMContentLoaded", function() {
+  // Check if the current page is the create events page
+  if (window.location.pathname === "/create-event/") {
+      // Call initMap() function when the DOM content is loaded
+      initMap();
+  }
+});
+
 var prevChatId = -1;
 function getList(searchTerm, byLocation) {
     let xhr = new XMLHttpRequest()
@@ -247,34 +255,58 @@ function renderAddress(place, map, marker) {
     }
   }
 
-async function initMap() {
-  const {Map} = google.maps;
-  const {AdvancedMarkerElement} = google.maps.marker;
-  const {Autocomplete} = google.maps.places;
-
-  const mapOptions = CONFIGURATION.mapOptions;
-  mapOptions.mapId = mapOptions.mapId || 'DEMO_MAP_ID';
-  mapOptions.center = mapOptions.center || {lat: 37.4221, lng: -122.0841};
-
-  const map = new Map(document.getElementById('gmp-map'), mapOptions);
-  const marker = new AdvancedMarkerElement({map});
-  const autocomplete = new Autocomplete(document.getElementById('id_location'), {
-    fields: ['address_components', 'geometry', 'name'],
-    types: ['address'],
+function initMap() {
+  const map = new google.maps.Map(document.getElementById("gmp-map"), {
+    center: { lat: 40.749933, lng: -73.98633 },
+    zoom: 13,
+    mapTypeControl: false,
   });
 
-  autocomplete.addListener('place_changed', () => {
+  const input = document.getElementById("id_location");
+  const options = {
+    fields: ["formatted_address", "geometry", "name"],
+    strictBounds: false,
+  };
+
+  const autocomplete = new google.maps.places.Autocomplete(input, options);
+  autocomplete.bindTo("bounds", map);
+
+  const infowindow = new google.maps.InfoWindow();
+  const infowindowContent = document.getElementById("infowindow-content");
+  infowindow.setContent(infowindowContent);
+
+  const marker = new google.maps.Marker({
+    map,
+    anchorPoint: new google.maps.Point(0, -29),
+  });
+
+  autocomplete.addListener("place_changed", () => {
+    infowindow.close();
+    marker.setVisible(false);
+
     const place = autocomplete.getPlace();
-    if (!place.geometry) {
-      // User entered the name of a Place that was not suggested and
-      // pressed the Enter key, or the Place Details request failed.
-      window.alert(`No details available for input: '${place.name}'`);
+
+    if (!place.geometry || !place.geometry.location) {
+      window.alert("No details available for input: '" + place.name + "'");
       return;
     }
-    renderAddress(place, map, marker);
-    fillInAddress(place);
+
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+    infowindowContent.children["place-name"].textContent = place.name;
+    infowindowContent.children["place-address"].textContent =
+      place.formatted_address;
+    infowindow.open(map, marker);
   });
 }
+  
 
 function getCSRFToken() {
     let cookies = document.cookie.split(";")
