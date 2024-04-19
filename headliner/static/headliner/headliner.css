@@ -28,21 +28,6 @@ headliner.css */
     margin: 8px;
 }
 
-.event-box {
-    background-color: lightblue;
-    width: 400px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: darkblue;
-    margin: 8px;
-    font-family: Helvetica;
-
-    font-size: 30px;
-    font-weight: bold;
-    color: darkblue;
-    text-decoration: none;
-}
-
 
 #register_link {
     font-size: 26px;
@@ -224,7 +209,14 @@ input[type="file"] {
     height: 50vh;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    /* center the map at the top of the container*/
+    margin: 0 auto;
+}
+
+#map {
+    width: 50vw;
+    height: 50vh;
+    border-radius: 10px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
     margin: 0 auto;
 }
 
@@ -255,8 +247,6 @@ input[type="file"] {
 .h4 {
     text-align: center;
 }
-
-
 
 #map-event {
     flex: 1;

@@ -20,7 +20,7 @@ urlpatterns = [
     #path('event/<int:event_id>/<int:chat_id>/', views.event_chat_action, name="eventChat"),
     path('photo/<int:event_id>/', views.get_photo, name="photo"),
     path('pfp/<int:user_id>/', views.get_pfp, name="pfp"),
-    path('editevent/<int:event_id>/', views.event_action, name="editevent"),
+    path('editevent/<int:event_id>/', views.edit_event_action, name="editevent"),
     #path('editevent/<int:event_id>/<int:chat_id>/', views.event_chat_action, name="editeventChat"),
 
     path('headliner/add-message', views.add_message, name='ajax-add-message'),
