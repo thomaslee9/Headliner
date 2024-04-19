@@ -164,7 +164,21 @@ input[type="file"] {
 #id_event_description {
     height: 200px;
 }
-
+#google_button {
+    position: relative;
+    padding: 10px 20px; 
+    background-color: #4285F4; 
+    color: #fff; 
+    border: none;
+    border-radius: 4px;
+    font-size: 16px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#google_button i.material-icons {
+    vertical-align: middle; /* Align the icon vertically */
+    margin-right: 5px; /* Add space between the icon and text */
+}
 .event-div {
     background: linear-gradient(to bottom, rgba(0,0,0, .5) 80%, rgba(111, 109, 109, 0.473) 100%);
     align-content: center;

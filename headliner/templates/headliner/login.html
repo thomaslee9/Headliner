@@ -31,7 +31,7 @@ login.html -->
         </form>
         <form method="post" action="/accounts/google/login/?process=login&next=%2Fglobal%2F">
             {% csrf_token %}
-            <button id="login_button" type="submit">Login with Google</button>
+            <button id="google_button" type="submit">Login with Google</button>
         </form>
     </div>
 {% endblock %}
