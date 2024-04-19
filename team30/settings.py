@@ -12,21 +12,25 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-
+from configparser import ConfigParser
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR2 = Path(__file__).resolve().parent.parent.parent
 
+CONFIG = ConfigParser()
+CONFIG.read(BASE_DIR2 / "config.ini")
+
+SECRET_KEY = CONFIG.get("Django", "secret")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p+hm#w8p$c7gzkyrz_19#49_!%cola-q^wyqgvt_i-_cx%3ya%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['18.216.16.110']
 
 
 # Application definition
@@ -77,8 +81,11 @@ WSGI_APPLICATION = 'team30.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'OPTIONS': {'charset': 'utf8mb4'},
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': '',
+        'PASSWORD': '',
     }
 }
 
