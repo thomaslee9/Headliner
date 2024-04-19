@@ -3,6 +3,23 @@ Headliner App
 createEvent.html -->
 {% extends "headliner/global.html" %}
 {% load static %}
+{% block head_script %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="{% static 'headliner/global.js' %}" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc&libraries=places"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+    $( function() {
+        $( "#id_date" ).datepicker({
+            minDate: 0 // Restrict to today and future dates only
+        });
+    } );
+    </script>
+
+{% endblock %}
+
 {% block content %}
     {% block page_header %}
         <div class="container" id="page_name">
@@ -29,6 +46,3 @@ createEvent.html -->
     </div>
 
 {% endblock %}
-    {% block script %}
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuDct23hJWRLXJsCyc-W6szXDj3swI8Kc&libraries=places,marker&callback=initMap&solution_channel=GMP_QB_addressselection_v2_cABC" async defer></script>
-    {% endblock %}
